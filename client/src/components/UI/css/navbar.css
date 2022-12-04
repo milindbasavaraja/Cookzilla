@@ -56,3 +56,10 @@
   text-decoration: none;
   color: inherit;
 }
+
+.logout-button,
+.login-button,
+.create-post-button {
+  margin-left: 5px;
+  margin-right: 5px;
+}

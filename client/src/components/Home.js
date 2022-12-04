@@ -11,14 +11,14 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`/posts${category}`);
+        const res = await axios.get(`/posts`);
         setPosts(res.data);
       } catch (error) {
         console.log(error);
       }
     };
     fetchData();
-  }, [category]);
+  }, []);
 
   const getText = (html) => {
     const doc = new DOMParser().parseFromString(html, "text/html");
@@ -27,16 +27,17 @@ const Home = () => {
 
   return (
     <div className="home">
-      
       <div className="home-posts">
         {posts.map((post) => (
-          <div className="home-post" key={post.id}>
+          <div className="home-post" key={post.recipeID}>
             <div className="home-post-img">
-              <img
-                src={`../uploads/${post.img}`}
-                className="home-post-image"
-                alt=""
-              />
+              <div className="row">
+                {post.pictureURL.map((picUrl, index) => (
+                  <div className="col" key={index}>
+                    <img src={picUrl} className="home-post-image" alt="Posts" />
+                  </div>
+                ))}
+              </div>
             </div>
             <div className="home-content">
               <h1 className="home-post-title">{post.title}</h1>

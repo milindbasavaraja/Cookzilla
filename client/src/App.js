@@ -35,6 +35,10 @@ const router = createBrowserRouter([
         path: "/write",
         element: <CreatePost />,
       },
+      {
+        path: "/my-profile",
+        element: <MyProfile />,
+      },
     ],
   },
   {
@@ -44,10 +48,6 @@ const router = createBrowserRouter([
   {
     path: "/log-in",
     element: <Login />,
-  },
-  {
-    path: "/my-profile",
-    element: <MyProfile />,
   },
 ]);
 function App() {

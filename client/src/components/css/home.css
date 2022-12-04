@@ -32,8 +32,9 @@
 
 .home-post-image {
   width: 100%;
-  height: auto;
+  height: 80%;
   max-height: 420px;
+  border-radius: 12%;
 }
 
 .home-content {

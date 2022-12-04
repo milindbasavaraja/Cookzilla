@@ -19,24 +19,35 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="links">
-          <span className="user-name">{currentUser?.username}</span>
+          <span className="user-name">{currentUser?.userName}</span>
+
           {currentUser ? (
-            <button type="button" className="btn btn-outline-danger">
+            <button
+              type="button"
+              className="btn btn-outline-danger logout-button"
+              onClick={logout}
+            >
               Logout
             </button>
           ) : (
             <Link className="link" to="/log-in">
-              <button type="button" className="btn btn-outline-primary">
+              <button
+                type="button"
+                className="btn btn-outline-primary login-button"
+              >
                 Login
               </button>
             </Link>
           )}
           {currentUser && (
-            <span className="navbar-write">
-              <Link className="link-write" to="/write">
+            <Link className="link-write" to="/write">
+              <button
+                type="button"
+                className="btn btn-outline-info create-post-button"
+              >
                 Create Post
-              </Link>
-            </span>
+              </button>
+            </Link>
           )}
         </div>
       </div>

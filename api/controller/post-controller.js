@@ -1,15 +1,16 @@
 import jwt from "jsonwebtoken";
 import { db } from "../db.js";
+import { TransformData } from "../utility/TransformData.js";
 
 export const getAllPosts = (req, res) => {
-  const getPostQuery = req.query.cat
-    ? "SELECT * FROM posts WHERE category=?"
-    : "SELECT * FROM posts";
+  const getAllPosts =
+    "SELECT r.recipeID,`title`,`pictureURL` FROM Recipe r,RecipePicture rp WHERE r.recipeID = rp.recipeID";
 
-  db.query(getPostQuery, [req.query.cat], (error, data) => {
+  db.query(getAllPosts, [], (error, data) => {
     if (error) return res.status(500).send(error);
 
-    return res.status(200).json(data);
+    const transformedData = TransformData(data);
+    return res.status(200).json(transformedData);
   });
 };
 

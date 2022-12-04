@@ -6,6 +6,10 @@
   width: 100%;
   height: 100%;
 }
+.my-profile-error {
+  color: red;
+  text-align: center;
+}
 .my-profile-pic {
   align-items: center;
   display: flex;
@@ -30,10 +34,10 @@
   color: rgb(67, 154, 246);
 }
 
-
 .my-profile-posts-image {
   height: 10%;
   width: 10%;
+  padding: 10px;
 }
 
 .my-profile-button {

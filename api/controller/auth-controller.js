@@ -51,11 +51,15 @@ export const login = (req, res) => {
         .status(404)
         .json("Incorrect Password. Please update the password");
 
+    console.log("The data is", data[0]);
     //Creating json web token
-    const jwtToken = jwt.sign({ id: data[0].id }, "userLoggedIn");
+    const jwtToken = jwt.sign(
+      { id: data[0].userName },
+      "userLoggedInCookzilla"
+    );
     const { password, ...otherInformation } = data[0];
     res
-      .cookie("access_token", jwtToken, {
+      .cookie("access_token_cookzilla", jwtToken, {
         httpOnly: true,
       })
       .status(200)
