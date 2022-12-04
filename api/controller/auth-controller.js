@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 
 export const register = (req, res) => {
   //Check existing user;
-  const emailQuery = "SELECT * FROM users WHERE email = ? OR username = ?";
+  const emailQuery = "SELECT * FROM Person WHERE email = ? OR userName = ?";
   db.query(emailQuery, [req.body.email, req.body.name], (err, data) => {
     if (err) return res.json(err);
     if (data.length) return res.status(409).json("User already exists");
@@ -14,9 +14,16 @@ export const register = (req, res) => {
     const hashPassword = bcrypt.hashSync(req.body.password, salt);
 
     const insertUserIntoDbQuery =
-      "INSERT INTO users(`username`,`email`,`password`) VALUES (?)";
+      "INSERT INTO Person(`username`,`email`,`password`,`fName`,`lName`,`profile`) VALUES (?)";
 
-    const values = [req.body.username, req.body.email, hashPassword];
+    const values = [
+      req.body.username,
+      req.body.email,
+      hashPassword,
+      req.body.fName,
+      req.body.lName,
+      req.body.profile,
+    ];
 
     db.query(insertUserIntoDbQuery, [values], (err, data) => {
       if (err) return res.status(500).json(err);
@@ -26,9 +33,8 @@ export const register = (req, res) => {
 };
 
 export const login = (req, res) => {
-  console.log("Logging in");
   //Check if user exists
-  const checkUserQuery = "SELECT * FROM users WHERE username=?";
+  const checkUserQuery = "SELECT * FROM Person WHERE userName=?";
 
   db.query(checkUserQuery, [req.body.username], (error, data) => {
     if (error) return res.status(500).json(error);

@@ -19,36 +19,25 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="links">
-          <Link className="link" to="/?cat=art">
-            <h6>ART</h6>
-          </Link>
-          <Link className="link" to="/?cat=science">
-            <h6>Science</h6>
-          </Link>
-          <Link className="link" to="/?cat=technology">
-            <h6>Technology</h6>
-          </Link>
-          <Link className="link" to="/?cat=cinema">
-            <h6>Cinema</h6>
-          </Link>
-          <Link className="link" to="/?cat=design">
-            <h6>Design</h6>
-          </Link>
           <span className="user-name">{currentUser?.username}</span>
           {currentUser ? (
-            <span className="log-out" onClick={logout}>
+            <button type="button" className="btn btn-outline-danger">
               Logout
-            </span>
+            </button>
           ) : (
             <Link className="link" to="/log-in">
-              Login
+              <button type="button" className="btn btn-outline-primary">
+                Login
+              </button>
             </Link>
           )}
-          <span className="navbar-write">
-            <Link className="link-write" to="/write">
-              Write
-            </Link>
-          </span>
+          {currentUser && (
+            <span className="navbar-write">
+              <Link className="link-write" to="/write">
+                Create Post
+              </Link>
+            </span>
+          )}
         </div>
       </div>
     </div>

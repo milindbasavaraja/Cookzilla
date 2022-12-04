@@ -22,7 +22,7 @@ const Login = () => {
       // console.log(userInput);
       // await axios.post("/auth/login", userInput);
       await login(userInput);
-      navigate("/");
+      navigate("/my-profile");
     } catch (err) {
       console.log(err);
       setError(err.response.data);
@@ -42,7 +42,7 @@ const Login = () => {
         <div className="login-form-content">
           <h3 className="login-form-title">Sign In</h3>
           <div className="form-group mt-3">
-            <label className="login-form-label">Email Address</label>
+            <label className="login-form-label">User Name</label>
             <input
               type="text"
               className="form-control mt-1"
@@ -52,7 +52,7 @@ const Login = () => {
             />
           </div>
           <div className="form-group mt-3">
-            <label className="login-form-label"> Passowrd </label>
+            <label className="login-form-label"> Password </label>
             <input
               type="password"
               className="form-control mt-1"

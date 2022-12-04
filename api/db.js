@@ -4,7 +4,7 @@ export const db = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "password",
-  database: "blog",
+  database: "cookzilla",
 });
 
 db.connect(function (err) {

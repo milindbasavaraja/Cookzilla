@@ -7,14 +7,13 @@ import CreatePost from "./components/CreatePost";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import Navbar from "./components/UI/Navbar";
-import Footer from "./components/UI/Footer";
+import MyProfile from "./components/MyProfile";
 
 const Layout = () => {
   return (
     <Fragment>
       <Navbar />
       <Outlet />
-      <Footer />
     </Fragment>
   );
 };
@@ -45,6 +44,10 @@ const router = createBrowserRouter([
   {
     path: "/log-in",
     element: <Login />,
+  },
+  {
+    path: "/my-profile",
+    element: <MyProfile />,
   },
 ]);
 function App() {
