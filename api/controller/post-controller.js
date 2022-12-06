@@ -128,7 +128,7 @@ export const addRecipePhotos = (req, res) => {
   const insertImagesQuery =
     "INSERT INTO RecipePicture (`recipeID`,`pictureURL`) VALUES ?";
   let images = [];
-  console.log("The rew images are", req.body.imgs);
+
   req.body.imgs.map((imageURL) => {
     images.push([req.body.recipeID, imageURL]);
   });
@@ -152,6 +152,22 @@ export const addRecipeTags = (req, res) => {
   db.query(insertImagesQuery, [tags], (error, data) => {
     if (error) return res.status(500).json(error);
     console.log("Tags uploaded");
+    return res.status(200).json(data);
+  });
+};
+
+export const addRecipeSteps = (req, res) => {
+  const insertStepsQuery =
+    "INSERT INTO Step (`recipeID`,`stepNo`,`sDesc`) VALUES ?";
+  let steps = [];
+
+  req.body.steps.map((step) => {
+    steps.push([req.body.recipeID, step.id, step.text]);
+  });
+
+  db.query(insertStepsQuery, [steps], (error, data) => {
+    if (error) return res.status(500).json(error);
+    console.log("Steps uploaded");
     return res.status(200).json(data);
   });
 };

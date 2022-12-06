@@ -2,6 +2,7 @@ import express from "express";
 import {
   addPost,
   addRecipePhotos,
+  addRecipeSteps,
   addRecipeTags,
   deletePostById,
   getAllPosts,
@@ -19,7 +20,8 @@ router.get("/lastest-recipeId", getLatestRecipeID);
 router.get("/:id", getPostById);
 router.post("/", addPost);
 router.post("/images", addRecipePhotos);
-router.post("/tags", addRecipeTags);
+router.post("/add-tags", addRecipeTags);
+router.post("/add-steps", addRecipeSteps);
 router.delete("/:id", deletePostById);
 router.put("/:id", updatePostById);
 
