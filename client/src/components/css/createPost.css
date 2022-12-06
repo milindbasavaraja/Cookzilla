@@ -17,8 +17,7 @@
 }
 
 .create-post-content-editor-container {
-  height: 300px;
-  overflow: scroll;
+  border: 1px solid lightgray;
 }
 
 .create-post-content-editor {

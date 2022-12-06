@@ -21,10 +21,11 @@ export const TransformData = (recipies) => {
     recipies
   );
 
+  //console.log(transformedDataArray);
+
   const transformedDataArrayWithUniqueValues = transformedDataArray.map(
     (recipie) => ({
       ...recipie,
-      pictureURL: Array.from(new Set(recipie.pictureURL)),
       tagText: Array.from(new Set(recipie.tagText)),
     })
   );

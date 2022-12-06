@@ -8,6 +8,7 @@ import { AuthContext } from "../context/auth-context";
 
 const Post = () => {
   const [post, setPost] = useState({});
+  const [steps, setSteps] = useState([]);
   const location = useLocation();
   const navigation = useNavigate();
 
@@ -18,6 +19,10 @@ const Post = () => {
       try {
         const res = await axios.get(`/posts/${postId}`);
         setPost(res.data);
+        console.log("Hitting Steps API");
+        const resSteps = await axios.get(`/posts/steps/${postId}`);
+        console.log(resSteps);
+        setSteps(resSteps.data);
       } catch (error) {
         console.log(error);
       }
@@ -40,11 +45,6 @@ const Post = () => {
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const getText = (html) => {
-    const doc = new DOMParser().parseFromString(html, "text/html");
-    return doc.body.textContent;
   };
 
   return (
@@ -86,7 +86,11 @@ const Post = () => {
           )}
         </div>
         <h1 className="post-content-single-h1">{post.title}</h1>
-        {getText(post.desc)}
+        {steps.map((step) => (
+          <div key={step.stepNo}>
+            {step.stepNo}. {step.sDesc}
+          </div>
+        ))}
       </div>
     </div>
   );

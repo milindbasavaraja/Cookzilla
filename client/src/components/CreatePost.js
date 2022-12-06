@@ -4,11 +4,11 @@ import "./css/createPost.css";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
+import Steps from "./UI/Steps/Steps";
 
 const CreatePost = () => {
   const state = useLocation().state;
   const navigation = useNavigate();
-  const [description, setDescription] = useState(state?.desc || "");
   const [title, setTitle] = useState(state?.title || "");
   const [img, setImg] = useState([]);
   const [tags, setTags] = useState([]);
@@ -16,14 +16,14 @@ const CreatePost = () => {
   const [checkBoxEnabled, setCheckBoxEnabled] = useState(true);
   const [customTags, setCustomTags] = useState("");
   const [invalidInput, setInvalidInput] = useState(false);
+  const [recipeSteps, setRecipeSteps] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await axios.get(`/posts/tags`);
-        console.log("The tags are: ", res.data);
+
         setTags(res.data);
-        console.log("The checked tags are: ", checkedTags);
       } catch (error) {
         console.log(error);
       }
@@ -44,18 +44,18 @@ const CreatePost = () => {
     event.preventDefault();
     const imageURLS = await uploadImage(img);
     console.log("The image Urls are: ", imageURLS);
-    if (customTags.length !== 0) {
-      const customTagsList = customTags.split(",");
-      setCheckedTags((prevCheckedTags) =>
-        [...prevCheckedTags, customTagsList].flat()
-      );
-      console.log(checkedTags);
-    }
+    console.log("Custom tags", customTags);
+
+    const customTagsList = customTags.split(",");
+    const allTags = [...checkedTags, ...customTagsList];
+
+    console.log(allTags);
 
     if (
       imageURLS.length === 0 ||
-      checkedTags.length === 0 ||
-      title.trim().length === 0
+      allTags.length === 0 ||
+      title.trim().length === 0 ||
+      recipeSteps.length === 0
     ) {
       setInvalidInput(true);
       return;
@@ -80,9 +80,13 @@ const CreatePost = () => {
         recipeID,
         imgs: imageURLS,
       });
-      await axios.post("/posts/tags", {
+      await axios.post("/posts/add-tags", {
         recipeID,
-        tags: checkedTags,
+        tags: allTags,
+      });
+      await axios.post("/posts/add-steps", {
+        recipeID,
+        steps: recipeSteps,
       });
       // desc: description,
 
@@ -125,7 +129,7 @@ const CreatePost = () => {
       let url = apiGatewayUrl + file.name;
       console.log(url);
       try {
-        const res = await axios.put(url, file, additionalParams);
+        await axios.put(url, file, additionalParams);
         console.log(`Image ${file.name} uploaded`);
         let imageURL = s3Url + file.name;
         console.log(`Adding imageURL ${imageURL} to our list`);
@@ -134,6 +138,7 @@ const CreatePost = () => {
         console.log(error);
       }
     }
+    console.log(imageURLS);
     return imageURLS;
   };
 
@@ -149,17 +154,26 @@ const CreatePost = () => {
         console.log("Item Dechecked is: ", event.target.value);
         updatedList.splice(checkedTags.indexOf(event.target.value), 1);
       }
+      setCheckedTags(updatedList);
     } else {
       setCheckBoxEnabled(true);
       setCustomTags("");
     }
-
-    setCheckedTags(updatedList);
   };
 
   const addTagsHandler = (event) => {
-    console.log(event.target.value);
     setCustomTags(event.target.value);
+  };
+
+  const onAllStepsSubmitted = (stepGoals) => {
+    stepGoals.map((step, index) => {
+      setRecipeSteps((prevStep) => [
+        ...prevStep,
+        { text: step.text, id: stepGoals.length - index },
+      ]);
+    });
+    // setRecipeSteps((prevSteps) => [...prevSteps, JSON.parse(stepGoals)]);
+    // console.log(recipeSteps);
   };
 
   return (
@@ -174,7 +188,9 @@ const CreatePost = () => {
             placeholder="Title"
             onChange={onTitleChangeHandler}
           />
-          <div className="create-post-content-editor-container"></div>
+          <div className="create-post-content-editor-container">
+            <Steps onStepsSubmitted={onAllStepsSubmitted} />
+          </div>
         </div>
         <div className="create-post-menu">
           <div className="create-post-menu-item">
