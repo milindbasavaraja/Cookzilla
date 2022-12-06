@@ -155,3 +155,58 @@ export const addRecipeTags = (req, res) => {
     return res.status(200).json(data);
   });
 };
+
+// export const getAllReviews = (req, res) => {
+//   const getAllReviewsQuery =
+//     "SELECT r.recipeID,`revTitle`,`pictureURL` FROM Review r,RecipePicture rp WHERE r.recipeID = rp.recipeID";
+
+//   db.query(getAllReviewsQuery, [], (error, data) => {
+//     if (error) return res.status(500).send(error);
+
+//     const transformedData = TransformData(data);
+//     return res.status(200).json(transformedData);
+//   });
+// };
+
+export const addReview = (req, res) => {
+  console.log("writing Review for Recipe with id");
+  const postId = req.params.id
+  const token = req.cookies.access_token_cookzilla;
+
+  if (!token) return res.status(401).json("Not Authenticated!");
+  jwt.verify(token, "userLoggedInCookzilla", (error, userInfo) => {
+    if (error) res.status(403).json("Token is not valid");
+    const insertReviewQuery =
+      "INSERT INTO Review ('userName','recipeID',`revTitle`,`revDesc`,`stars`) VALUES (?)";
+
+    const values = [userInfo.id,postId,req.body.revTitle, req.body.revDesc,req.body.stars];
+
+    db.query(insertRecipieQuery, [values], (error, data) => {
+      if (error) return res.status(500).json(error);
+      return res.status(200).send("Inserted Recipe");
+    });
+  });
+};
+
+export const addReviewPhoto = (req, res) => {
+  const token = req.cookies.access_token;
+
+  if (!token) return res.status(401).json("Not Authenticated!");
+  jwt.verify(token, "userLoggedIn", (error, userInfo) => {
+    if (error) res.status(403).json("Token is not valid");
+    const insertRImagesQuery =
+    "INSERT INTO ReviewPicture ('userName',`recipeID`,`pictureURL`) VALUES ?";
+
+  let images = [];
+  console.log("The rew images are", req.body.imgs);
+  req.body.imgs.map((imageURL) => {
+    images.push([userInfo.id,req.body.recipeID, imageURL]);
+  });
+
+  db.query(insertRImagesQuery, [images], (error, data) => {
+    if (error) return res.status(500).json(error);
+    console.log("Images uploaded");
+    return res.status(200).json(data);
+  });
+});
+};
