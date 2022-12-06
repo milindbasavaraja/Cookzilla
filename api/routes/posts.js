@@ -6,6 +6,7 @@ import {
   addRecipeTags,
   deletePostById,
   getAllPosts,
+  getAllStepsById,
   getAllTags,
   getLatestRecipeID,
   getPostById,
@@ -18,6 +19,8 @@ router.get("/", getAllPosts);
 router.get("/tags", getAllTags);
 router.get("/lastest-recipeId", getLatestRecipeID);
 router.get("/:id", getPostById);
+router.get("/steps/:id", getAllStepsById);
+
 router.post("/", addPost);
 router.post("/images", addRecipePhotos);
 router.post("/add-tags", addRecipeTags);

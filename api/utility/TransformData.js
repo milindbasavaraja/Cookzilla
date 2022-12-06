@@ -21,7 +21,7 @@ export const TransformData = (recipies) => {
     recipies
   );
 
-  console.log(transformedDataArray);
+  //console.log(transformedDataArray);
 
   const transformedDataArrayWithUniqueValues = transformedDataArray.map(
     (recipie) => ({
@@ -30,6 +30,6 @@ export const TransformData = (recipies) => {
     })
   );
 
-  console.log("The transformed data is ", transformedDataArrayWithUniqueValues);
+  //console.log("The transformed data is ", transformedDataArrayWithUniqueValues);
   return transformedDataArrayWithUniqueValues;
 };

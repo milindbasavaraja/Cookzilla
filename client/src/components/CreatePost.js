@@ -22,7 +22,7 @@ const CreatePost = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get(`/posts/tags`);
-        console.log("The tags are: ", res.data);
+
         setTags(res.data);
       } catch (error) {
         console.log(error);
@@ -166,8 +166,6 @@ const CreatePost = () => {
   };
 
   const onAllStepsSubmitted = (stepGoals) => {
-    console.log(`${JSON.stringify(stepGoals)}`);
-
     stepGoals.map((step, index) => {
       setRecipeSteps((prevStep) => [
         ...prevStep,

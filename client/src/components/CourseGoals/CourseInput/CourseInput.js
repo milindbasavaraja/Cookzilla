@@ -67,7 +67,7 @@ const CourseInput = (props) => {
           value={enteredValue}
         />
       </FormControl>
-      <Button type="submit">Add Goal</Button>
+      <Button type="submit">Add Step</Button>
       <button onClick={onSubmitAllHandler} className="btn btn-success">
         Submit All Steps
       </button>

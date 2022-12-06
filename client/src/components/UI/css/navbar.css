@@ -63,3 +63,21 @@
   margin-left: 5px;
   margin-right: 5px;
 }
+
+.navbar-category-select {
+  width: 8rem;
+  border: 2px solid blue;
+}
+
+.navbar-content-input {
+  padding: 10px;
+  border: 1px solid lightgray;
+}
+
+.navbar-search-bar {
+  display: flex;
+}
+
+.navbar-search-input {
+  margin-right: 5px;
+}

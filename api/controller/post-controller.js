@@ -3,22 +3,36 @@ import { db } from "../db.js";
 import { TransformData } from "../utility/TransformData.js";
 
 export const getAllPosts = (req, res) => {
-  const getAllPostsQuery =
-    "SELECT r.recipeID,`title`,`pictureURL` FROM Recipe r,RecipePicture rp WHERE r.recipeID = rp.recipeID";
+  const queryString = req.query;
 
-  db.query(getAllPostsQuery, [], (error, data) => {
-    if (error) return res.status(500).send(error);
+  if ("tags" in queryString) {
+    //The query string is: { tags: 'Indian' }
+    const getTagsQuery =
+      "SELECT r.recipeID,`title`,`pictureURL` FROM Recipe r,RecipePicture rp, RecipeTag rt WHERE r.recipeID = rp.recipeID AND r.recipeID = rt.recipeID AND tagText=?";
 
-    const transformedData = TransformData(data);
-    return res.status(200).json(transformedData);
-  });
+    db.query(getTagsQuery, [queryString.tags], (error, data) => {
+      if (error) return res.status(500).send(error);
+
+      const transformedData = TransformData(data);
+      return res.status(200).json(transformedData);
+    });
+  } else {
+    const getAllPostsQuery =
+      "SELECT r.recipeID,`title`,`pictureURL` FROM Recipe r,RecipePicture rp WHERE r.recipeID = rp.recipeID";
+
+    db.query(getAllPostsQuery, [], (error, data) => {
+      if (error) return res.status(500).send(error);
+
+      const transformedData = TransformData(data);
+      return res.status(200).json(transformedData);
+    });
+  }
 };
 
 export const getPostById = (req, res) => {
-  console.log("Getting post by id");
   const getPostDetailsQuery =
     "SELECT `userName`,r.recipeID,`title`,`numServings`,`tagText`,pictureURL FROM Person p, Recipe r,RecipeTag rt,RecipePicture rp WHERE p.userName = r.postedBy AND r.recipeID = rt.recipeID AND r.recipeID = rp.recipeID AND r.recipeID=?";
-  console.log("The query is ", getPostDetailsQuery);
+
   db.query(getPostDetailsQuery, [req.params.id], (error, data) => {
     if (error) {
       console.log("Error happened while querying per ID", error);
@@ -168,6 +182,23 @@ export const addRecipeSteps = (req, res) => {
   db.query(insertStepsQuery, [steps], (error, data) => {
     if (error) return res.status(500).json(error);
     console.log("Steps uploaded");
+    return res.status(200).json(data);
+  });
+};
+
+export const getAllStepsById = (req, res) => {
+  console.log("Getting steps by id");
+  const getPostStepsQuery =
+    "SELECT `stepNo`,`sDesc` FROM Step s WHERE s.recipeID = ? ORDER BY `stepNo`";
+
+  db.query(getPostStepsQuery, [req.params.id], (error, data) => {
+    if (error) {
+      console.log("Error happened while querying per ID", error);
+      return res.status(500).send(error);
+    }
+
+    console.log(data);
+
     return res.status(200).json(data);
   });
 };

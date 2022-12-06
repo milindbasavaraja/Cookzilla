@@ -10,24 +10,16 @@ const Home = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log("Getting posts");
       try {
-        const res = await axios.get(`/posts`);
-        console.log(res.data);
+        const res = await axios.get(`/posts${category}`);
+
         setPosts(res.data);
       } catch (error) {
         console.log(error);
       }
     };
     fetchData();
-  }, []);
-
-  const getText = (html) => {
-    const doc = new DOMParser().parseFromString(html, "text/html");
-    return doc.body.textContent;
-  };
-
-  const postImage = "";
+  }, [category]);
 
   return (
     <div className="home">
@@ -36,7 +28,6 @@ const Home = () => {
           <div className="home-post" key={post.recipeID}>
             <div className="home-post-img">
               <div className="row-image">
-                {console.log(typeof post.pictureURL)}
                 {typeof post.pictureURL === "string" ? (
                   <img
                     src={post.pictureURL}
@@ -58,8 +49,6 @@ const Home = () => {
             </div>
             <div className="home-content">
               <h1 className="home-post-title">{post.title}</h1>
-
-              <p className="home-post-description">{getText(post.desc)}</p>
               <Link className="link" to={`/post/${post.recipeID}`}>
                 <button className="home-post-read-more">Read More</button>
               </Link>
