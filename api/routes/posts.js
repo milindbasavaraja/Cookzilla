@@ -4,6 +4,10 @@ import {
   addRecipePhotos,
   addRecipeTags,
   deletePostById,
+  addReview,
+  addReviewPhoto,
+  //updateReviewById,
+  //deleteReviewById,
   getAllPosts,
   getAllTags,
   getLatestRecipeID,
@@ -22,5 +26,9 @@ router.post("/images", addRecipePhotos);
 router.post("/tags", addRecipeTags);
 router.delete("/:id", deletePostById);
 router.put("/:id", updatePostById);
+router.post("/images/review", addReviewPhoto);
+router.post("/:id/review",addReview);
+// router.delete("/:id/review", deletePostById);
+// router.put("/:id/review", updatePostById);
 
 export default router;

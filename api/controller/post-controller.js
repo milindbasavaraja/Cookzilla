@@ -210,3 +210,51 @@ export const addReviewPhoto = (req, res) => {
   });
 });
 };
+
+// export const deleteReviewById = (req, res) => {
+//   const token = req.cookies.access_token;
+
+//   if (!token) return res.status(401).json("Not Authenticated!");
+//   jwt.verify(token, "userLoggedIn", (error, userInfo) => {
+//     if (error) res.status(403).json("Token is not valid");
+
+//     const postId = req.params.id;
+//     const userId = userInfo.id;
+//     const deletPostQuery = "DELETE FROM Reviews WHERE `recipeID`= ? AND `userName` = ?";
+
+//     db.query(deletPostQuery, [postId, userId], (error, data) => {
+//       if (error) return res.status(403).json("You can delete only your Reviews.");
+
+//       return res.json("Review has been deleted");
+//     });
+//   });
+// };
+
+// export const updateReviewById = (req, res) => {
+//   const token = req.cookies.access_token;
+
+//   if (!token) return res.status(401).json("Not Authenticated!");
+//   jwt.verify(token, "userLoggedIn", (error, userInfo) => {
+//     if (error) res.status(403).json("Token is not valid");
+//     const postId = req.params.id;
+ //    const userId = userInfo.id;
+//     const updatePostQuery =
+//       "UPDATE s SET `revTitle`=?, `revDesc`=?, `img`=?, `stars`=? WHERE `recipeID`=? AND `userName`=?";
+
+//     const values = [
+//       req.body.revTitle,
+//       req.body.revDesc,
+//       req.body.img,
+//       req.body.stars,
+//     ];
+
+//     db.query(
+//       updatePostQuery,
+//       [...values, postId, userId],
+//       (error, data) => {
+//         if (error) return res.status(500).json(error);
+//         return res.status(200).json("Post has been updated");
+//       }
+//     );
+//   });
+// };
