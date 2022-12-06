@@ -10,14 +10,13 @@ const Post = () => {
   const [post, setPost] = useState({});
   const location = useLocation();
   const navigation = useNavigate();
-  console.log("The locations is", location);
+
   const postId = location.pathname.split("/")[2];
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await axios.get(`/posts/${postId}`);
-        console.log(JSON.stringify(res));
         setPost(res.data);
       } catch (error) {
         console.log(error);
@@ -51,25 +50,33 @@ const Post = () => {
   return (
     <div className="post-root">
       <div className="post-content-single">
-        <img
-          className="post-content-single-image"
-          src={`../uploads/${post.img}`}
-          alt=""
-        />
+        {post.pictureURL && (
+          <div className="post-content-cards">
+            {post.pictureURL.map((picUrl, index) => (
+              <img
+                src={picUrl}
+                className="single-post-image"
+                alt="Posts"
+                key={index}
+              />
+            ))}
+          </div>
+        )}
+
         <div className="post-user-single">
           {userImageDisplay}
           <div className="post-info-single">
-            <span className="post-span-user-name">{post?.username}</span>
+            <span className="post-span-user-name">{post?.userName}</span>
             <p>Posted {moment(post.date).fromNow()}</p>
           </div>
-          {currentUser.username === post.username && (
+          {post.userName && currentUser?.userName === post.userName && (
             <div className="post-edit-single">
               <Link className="link" to={`/write?edit=2`} state={post}>
                 <i className="fa-solid fa-pen"></i>
               </Link>
             </div>
           )}
-          {currentUser.username === post.username && (
+          {post.userName && currentUser?.userName === post.userName && (
             <div className="post-delete-single">
               <i
                 onClick={onDeleteHandler}
@@ -81,10 +88,10 @@ const Post = () => {
         <h1 className="post-content-single-h1">{post.title}</h1>
         {getText(post.desc)}
       </div>
-
-      <Menu category={post.category} id={post.id} />
     </div>
   );
 };
 
 export default Post;
+
+//<Menu category={post.category} id={post.id} />;

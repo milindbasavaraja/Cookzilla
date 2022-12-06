@@ -11,8 +11,8 @@ const Menu = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`/posts/?cat=${category}`);
-        setPosts(res.data);
+        // const res = await axios.get(`/posts/?cat=${category}`);
+        // setPosts(res.data);
       } catch (error) {
         console.log(error);
       }

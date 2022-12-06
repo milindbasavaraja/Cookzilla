@@ -31,8 +31,8 @@
 }
 
 .home-post-image {
-  width: 100%;
-  height: 80%;
+  width: 10rem;
+  height: 8rem;
   max-height: 420px;
   border-radius: 12%;
 }
@@ -65,4 +65,11 @@
   border: 1px solid white;
   background-color: lightseagreen;
   color: white;
+}
+
+.row-image {
+  display: flex;
+  row-gap: 10px;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
 }

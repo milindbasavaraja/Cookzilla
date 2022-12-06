@@ -47,22 +47,23 @@ const MyProfile = () => {
             <p>{userInfo.profile}</p>
           </div>
           <div className="my-profile-posts">
-            <ol className="list-group list-group-numbered">
+            <ol>
               {userPosts.map((post) => (
-                <li
-                  key={post.recipeID}
-                  className="list-group-item d-flex justify-content-between align-items-start"
-                >
-                  <div className="ms-2 me-auto">
-                    <div className="fw-bold">{post.title}</div>
-                    {post.pictureURL.map((img, index) => (
-                      <img
-                        className="my-profile-posts-image"
-                        src={img}
-                        alt="My Profile Posts"
-                        key={index}
-                      />
-                    ))}
+                <li key={post.recipeID}>
+                  <div className="my-profile-post">
+                    <div className="my-profile-posts-images">
+                      {post.pictureURL.map((img, index) => (
+                        <img
+                          className="my-profile-posts-image"
+                          src={img}
+                          alt="My Profile Posts"
+                          key={index}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <div className="my-profile-posts-title">
+                    <h1>{post?.title}</h1>
                   </div>
                   <div>
                     <button className="my-profile-button"> Read More</button>

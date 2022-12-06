@@ -7,7 +7,7 @@ const Home = () => {
   const [posts, setPosts] = useState([]);
 
   const category = useLocation().search;
-  console.log(category);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -31,11 +31,14 @@ const Home = () => {
         {posts.map((post) => (
           <div className="home-post" key={post.recipeID}>
             <div className="home-post-img">
-              <div className="row">
+              <div className="row-image">
                 {post.pictureURL.map((picUrl, index) => (
-                  <div className="col" key={index}>
-                    <img src={picUrl} className="home-post-image" alt="Posts" />
-                  </div>
+                  <img
+                    src={picUrl}
+                    className="home-post-image"
+                    alt="Posts"
+                    key={index}
+                  />
                 ))}
               </div>
             </div>
@@ -43,7 +46,7 @@ const Home = () => {
               <h1 className="home-post-title">{post.title}</h1>
 
               <p className="home-post-description">{getText(post.desc)}</p>
-              <Link className="link" to={`/post/${post.id}`}>
+              <Link className="link" to={`/post/${post.recipeID}`}>
                 <button className="home-post-read-more">Read More</button>
               </Link>
             </div>
