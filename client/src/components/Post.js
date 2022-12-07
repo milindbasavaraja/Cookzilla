@@ -86,11 +86,36 @@ const Post = () => {
           )}
         </div>
         <h1 className="post-content-single-h1">{post.title}</h1>
-        {steps.map((step) => (
-          <div key={step.stepNo}>
-            {step.stepNo}. {step.sDesc}
-          </div>
-        ))}
+        <h3 className="post-content-single-h3">Recipe Steps</h3>
+        <div class="accordion" id="accordionExample">
+          {steps.map((step) => (
+            <div class="accordion-item">
+              <h2
+                class="accordion-header"
+                id={/*id="headingOne"*/ `heading${step.stepNo}`}
+              >
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target={/*"#collapseOne"*/ `#collapse${step.stepNo}`}
+                  aria-expanded="false"
+                  aria-controls={`collapse${step.stepNo}`}
+                >
+                  {/*Accordion Item #1*/ `Step ${step.stepNo}`}
+                </button>
+              </h2>
+              <div
+                id={/*"collapseOne"*/ `collapse${step.stepNo}`}
+                class="accordion-collapse collapse"
+                aria-labelledby={`heading${step.stepNo}`}
+                data-bs-parent="#accordionExample"
+              >
+                <div class="accordion-body">{step.sDesc}</div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

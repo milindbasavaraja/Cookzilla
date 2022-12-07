@@ -83,3 +83,8 @@
   max-height: 420px;
   border-radius: 12%;
 }
+
+.post-content-single-h3 {
+  font-size: 32px;
+  color: rgb(94, 92, 92);
+}
