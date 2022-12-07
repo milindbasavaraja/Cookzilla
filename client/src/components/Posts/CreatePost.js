@@ -4,7 +4,7 @@ import "./css/createPost.css";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
-import Steps from "./UI/Steps/Steps";
+import Steps from "../UI/Steps/Steps";
 
 const CreatePost = () => {
   const state = useLocation().state;
@@ -258,7 +258,8 @@ const CreatePost = () => {
 
             <div className="create-post-menu-buttons">
               <button
-                className="create-post-menu-buttons-update"
+                type="button"
+                className="btn btn-primary"
                 onClick={onPublishPostHandler}
               >
                 Post
@@ -277,63 +278,3 @@ const CreatePost = () => {
 };
 
 export default CreatePost;
-
-//{
-/* <div className="create-post-menu-item">
-          <div className="create-post-menu-item-category">
-            <input
-              type="radio"
-              name="cat"
-              value="art"
-              id="art"
-              onChange={onCategoryChangeHandler}
-              checked={category === "art"}
-            />
-            <label htmlFor="art">Art</label>
-          </div>
-          <div className="create-post-menu-item-category">
-            <input
-              type="radio"
-              name="cat"
-              value="science"
-              id="science"
-              onChange={onCategoryChangeHandler}
-              checked={category === "science"}
-            />
-            <label htmlFor="science">Science</label>
-          </div>
-          <div className="create-post-menu-item-category">
-            <input
-              type="radio"
-              name="cat"
-              value="technology"
-              id="technology"
-              onChange={onCategoryChangeHandler}
-              checked={category === "technology"}
-            />
-            <label htmlFor="tech">Technology</label>
-          </div>
-          <div className="create-post-menu-item-category">
-            <input
-              type="radio"
-              name="cat"
-              value="cinema"
-              id="cinema"
-              onChange={onCategoryChangeHandler}
-              checked={category === "cinema"}
-            />
-            <label htmlFor="cinema">Cinema</label>
-          </div>
-          <div className="create-post-menu-item-category">
-            <input
-              type="radio"
-              name="cat"
-              value="design"
-              id="design"
-              onChange={onCategoryChangeHandler}
-              checked={category === "design"}
-            />
-            <label htmlFor="design">Design</label>
-          </div>
-        </div> */
-//}

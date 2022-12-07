@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./css/post.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import Menu from "./UI/Menu";
+import Menu from "../UI/Menu";
 import axios from "axios";
 import moment from "moment";
-import { AuthContext } from "../context/auth-context";
+import { AuthContext } from "../../context/auth-context";
 
 const Post = () => {
   const [post, setPost] = useState({});
@@ -87,15 +87,15 @@ const Post = () => {
         </div>
         <h1 className="post-content-single-h1">{post.title}</h1>
         <h3 className="post-content-single-h3">Recipe Steps</h3>
-        <div class="accordion" id="accordionExample">
+        <div className="accordion" id="accordionExample">
           {steps.map((step) => (
-            <div class="accordion-item">
+            <div className="accordion-item" key={step.stepNo}>
               <h2
-                class="accordion-header"
+                className="accordion-header"
                 id={/*id="headingOne"*/ `heading${step.stepNo}`}
               >
                 <button
-                  class="accordion-button collapsed"
+                  className="accordion-button collapsed"
                   type="button"
                   data-bs-toggle="collapse"
                   data-bs-target={/*"#collapseOne"*/ `#collapse${step.stepNo}`}
@@ -107,20 +107,22 @@ const Post = () => {
               </h2>
               <div
                 id={/*"collapseOne"*/ `collapse${step.stepNo}`}
-                class="accordion-collapse collapse"
+                className="accordion-collapse collapse"
                 aria-labelledby={`heading${step.stepNo}`}
                 data-bs-parent="#accordionExample"
               >
-                <div class="accordion-body">{step.sDesc}</div>
+                <div className="accordion-body">{step.sDesc}</div>
               </div>
             </div>
           ))}
         </div>
       </div>
+      {console.log(post)}
+      <Menu category={post.tagText} id={post.id} />
     </div>
   );
 };
 
 export default Post;
 
-//<Menu category={post.category} id={post.id} />;
+//;

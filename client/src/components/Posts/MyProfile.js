@@ -2,7 +2,8 @@ import React, { useContext, useEffect } from "react";
 import "./css/myprofile.css";
 import { useState } from "react";
 import axios from "axios";
-import { AuthContext } from "../context/auth-context";
+import { AuthContext } from "../../context/auth-context";
+import { Link } from "react-router-dom";
 
 const MyProfile = () => {
   const [userInfo, setUserInfo] = useState({});
@@ -66,7 +67,9 @@ const MyProfile = () => {
                     <h1>{post?.title}</h1>
                   </div>
                   <div>
-                    <button className="my-profile-button"> Read More</button>
+                    <Link className="link" to={`/post/${post.recipeID}`}>
+                      <button className="my-profile-button"> Read More</button>
+                    </Link>
                   </div>
                 </li>
               ))}
