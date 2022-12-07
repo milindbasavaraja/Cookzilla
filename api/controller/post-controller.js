@@ -202,3 +202,24 @@ export const getAllStepsById = (req, res) => {
     return res.status(200).json(data);
   });
 };
+
+export const addRecipeIngredients = (req, res) => {
+  const insertStepsQuery =
+    "INSERT INTO RecipeIngredient (`recipeID`,`iName`,`unitName`,`amount`) VALUES ?";
+  let ingredients = [];
+
+  req.body.ingredients.map((ingredient) => {
+    ingredients.push([
+      req.body.recipeID,
+      ingredient.iName,
+      ingredient.unitName,
+      ingredient.amount,
+    ]);
+  });
+
+  db.query(insertStepsQuery, [ingredients], (error, data) => {
+    if (error) return res.status(500).json(error);
+    console.log("Steps uploaded");
+    return res.status(200).json(data);
+  });
+};

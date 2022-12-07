@@ -1,38 +1,43 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Button from "../../UI/Buttons/Button";
+import Dropdown from "../../UI/UnitDropDown";
+import IngredientDropdown from "../../UI/IngredientsDropdown";
 import "./CourseInput.css";
-
-const FormControl = styled.div`
-  margin: 0.5rem 0;
-
-  & label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 0.5rem;
-    color: ${(props) => (props.invalid ? "red" : "black")};
-  }
-
-  & input {
-    display: block;
-    width: 100%;
-    border: 1px solid ${(props) => (props.invalid ? "red" : "#ccc")};
-    font: inherit;
-    line-height: 1.5rem;
-    padding: 0 0.25rem;
-    background-color: ${(props) => (props.invalid ? "#ffd7d7" : "transparent")};
-  }
-
-  & input:focus {
-    outline: none;
-    background: #fad0ec;
-    border-color: #8b005d;
-  }
-`;
 
 const CourseInput = (props) => {
   const [enteredValue, setEnteredValue] = useState("");
   const [isValid, setIsValid] = useState(true);
+  const [unitSelected, setUnitSelected] = useState("");
+  const [ingredientSelected, setIngredientSelected] = useState("");
+  const [enteredQuantity, setEnteredQuantity] = useState("");
+  const [enteredPurchaseLink, setEnteredPurchaseLink] = useState("");
+  const [displayTextBox, setDisplayTextBox] = useState(true);
+
+  useEffect(() => {
+    if (props.displayUnitButton) {
+      setDisplayTextBox(false);
+    }
+  }, []);
+
+  const onSelectHandler = (selectedUnit) => {
+    console.log("In CourseInput ", selectedUnit);
+    if (selectedUnit !== "Select Unit") {
+      console.log("Setting unit");
+      setUnitSelected(selectedUnit);
+    }
+  };
+
+  const onSelectIngredientHandler = (selectedIngredient) => {
+    console.log("In CourseInput ", selectedIngredient);
+    if (selectedIngredient === "New Ingredient") {
+      setDisplayTextBox(true);
+    } else if (selectedIngredient !== "Select Ingredient") {
+      console.log("Setting Ingredient");
+      setIngredientSelected(selectedIngredient);
+    }
+  };
+
   const goalInputChangeHandler = (event) => {
     if (event.target.value.trim().length > 0) {
       console.log("Setting to true");
@@ -41,14 +46,55 @@ const CourseInput = (props) => {
     setEnteredValue(event.target.value);
   };
 
+  const quantityInputChangeHandler = (event) => {
+    setEnteredQuantity(event.target.value);
+  };
+
+  const purchaseLinkInputChangeHandler = (event) => {
+    setEnteredPurchaseLink(event.target.value);
+  };
+
   const formSubmitHandler = (event) => {
     event.preventDefault();
-    if (enteredValue.trim().length === 0) {
+    if (
+      enteredValue.trim().length === 0 &&
+      ingredientSelected.trim().length === 0
+    ) {
       setIsValid(false);
       return;
     }
-    props.onAddGoal(enteredValue);
+    if (props.displayUnitButton) {
+      console.log("The deata is: ", {
+        text: `${
+          ingredientSelected.trim().length === 0
+            ? enteredValue
+            : ingredientSelected
+        }`,
+        ingredientUnit: unitSelected,
+        quantity: enteredQuantity,
+      });
+      props.onAddGoal({
+        text: `${
+          ingredientSelected.trim().length === 0
+            ? enteredValue
+            : ingredientSelected
+        }`,
+        ingredientUnit: unitSelected,
+        quantity: enteredQuantity,
+        purchaseLink: enteredPurchaseLink,
+      });
+    } else {
+      props.onAddGoal({ text: enteredValue });
+    }
+
     setEnteredValue("");
+    setEnteredQuantity("");
+    if (props.displayUnitButton) {
+      setDisplayTextBox(false);
+    }
+
+    setIngredientSelected("");
+    setEnteredPurchaseLink("");
   };
 
   const onSubmitAllHandler = () => {
@@ -58,19 +104,58 @@ const CourseInput = (props) => {
 
   return (
     <form onSubmit={formSubmitHandler}>
-      <FormControl invalid={!isValid}>
-        <label>Recipe Steps</label>
-
+      <label className="course-input-form-label">{props.labelTitle}</label>
+      <div className={`form-control${props.displayUnitButton ? "-steps" : ""}`}>
+        {!displayTextBox && (
+          <IngredientDropdown onSelect={onSelectIngredientHandler} />
+        )}
         <input
-          type="text"
+          type={displayTextBox ? "text" : "hidden"}
           onChange={goalInputChangeHandler}
           value={enteredValue}
+          className={`form-control-input${
+            props.displayUnitButton ? "-steps" : ""
+          }`}
+          placeholder={props.placeholder}
         />
-      </FormControl>
-      <Button type="submit">Add Step</Button>
-      <button onClick={onSubmitAllHandler} className="btn btn-success">
-        Submit All Steps
-      </button>
+        {displayTextBox && props.displayUnitButton && (
+          <input
+            type="text"
+            onChange={purchaseLinkInputChangeHandler}
+            className={`form-control-input${
+              props.displayUnitButton ? "-steps" : ""
+            }`}
+            placeholder="Enter Purchase Link"
+          />
+        )}
+        {props.displayUnitButton && (
+          <div className="form-control-input-ingredients">
+            <input
+              type="text"
+              onChange={quantityInputChangeHandler}
+              value={enteredQuantity}
+              className={`form-control-input${
+                props.displayUnitButton ? "-steps" : ""
+              }`}
+              placeholder="Enter Quantity"
+            />
+            <Dropdown onSelect={onSelectHandler} />
+          </div>
+        )}
+      </div>
+      <div className="course-input-buttons">
+        <Button type="submit" classNameProps={"btn btn-outline-success"}>
+          {props.buttonTitle}
+        </Button>
+
+        <Button
+          type="button"
+          onClick={onSubmitAllHandler}
+          classNameProps="btn btn-success"
+        >
+          {props.submitTitle}
+        </Button>
+      </div>
     </form>
   );
 };

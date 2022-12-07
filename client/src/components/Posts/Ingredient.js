@@ -1,26 +1,31 @@
-import React from "react";
-import Dropdown from "../UI/Dropdown";
+import React, { useEffect, useState } from "react";
 
-const Ingredient = () => {
+import Steps from "../UI/Steps/Steps";
+import "./css/ingredient.css";
+
+const Ingredient = (props) => {
+  
+
+  const onAllIngrdientsSubmitted = (stepGoals) => {
+    props.onStepsSubmitted(stepGoals);
+  };
+
+ 
+
   return (
     <div className="create-post-ingrdient">
       <div className="create-post-ingrdient-title">
         <h5>Select Applicable Ingrdients</h5>
       </div>
-      <div className="create-post-ingredient-details">
-        <input
-          type="checkbox"
-          name=""
-          value="Other"
-          id="create-post-tags-checkbox"
+      <div className="create-post-ingrdient-content">
+        <Steps
+          onStepsSubmitted={onAllIngrdientsSubmitted}
+          buttonTitle={"Add Ingredient"}
+          submitTitle={"Submit All Ingredients"}
+          labelTitle={"Recipe Ingrdients"}
+          displayUnitButton={true}
+          placeholder={"Enter Ingredient"}
         />
-        <label
-          htmlFor="create-post-tags-checkbox"
-          className="create-post-tags-checkbox-tag"
-        >
-          Other
-        </label>
-        <Dropdown />
       </div>
     </div>
   );

@@ -1,20 +1,43 @@
 .form-control {
   margin: 0.5rem 0;
 }
+.form-control-steps {
+  display: flex;
+  flex-direction: column;
+}
 
-.form-control label {
+.form-control-input-ingredients {
+  display: flex;
+  flex-direction: row;
+}
+
+.course-input-form-label {
   font-weight: bold;
-  display: block;
+  display: inline-block;
+  font-size: 1.5rem;
   margin-bottom: 0.5rem;
 }
 
-.form-control input {
+.form-control-input {
   display: block;
+  height: 2rem;
   width: 100%;
   border: 1px solid #ccc;
   font: inherit;
   line-height: 1.5rem;
   padding: 0 0.25rem;
+}
+
+.form-control-input-steps {
+  height: 2rem;
+  margin-right: 10px;
+ 
+  border: 1px solid #ccc;
+  font: inherit;
+  line-height: 1.5rem;
+  padding: 0 0.25rem;
+  margin-bottom: 0.5rem;
+  border-radius: 2%;
 }
 
 .form-control input:focus {
@@ -31,3 +54,8 @@
   border-color: red;
   background-color: #ffd7d7;
 }
+
+.course-input-buttons {
+  display: flex;
+}
+
