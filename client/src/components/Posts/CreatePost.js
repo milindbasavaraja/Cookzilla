@@ -5,6 +5,7 @@ import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
 import Steps from "../UI/Steps/Steps";
+import Ingredient from "./Ingredient";
 
 const CreatePost = () => {
   const state = useLocation().state;
@@ -264,6 +265,11 @@ const CreatePost = () => {
               >
                 Post
               </button>
+            </div>
+          </div>
+          <div className="create-post-menu">
+            <div className="create-post-menu-item">
+              <Ingredient />
             </div>
           </div>
           {invalidInput && (

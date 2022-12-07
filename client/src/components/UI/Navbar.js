@@ -43,18 +43,10 @@ const Navbar = () => {
               className="navbar-category-select"
               onChange={onHandleSelect}
             >
-              <option value="" onChange={onHandleSelect}>
-                --Please choose an option--
-              </option>
-              <option value="tags" onChange={onHandleSelect}>
-                Tags
-              </option>
-              <option value="ingredients" onChange={onHandleSelect}>
-                Ingredients
-              </option>
-              <option value="stars" onChange={onHandleSelect}>
-                Review Stars
-              </option>
+              <option value="">--Please choose an option--</option>
+              <option value="tags">Tags</option>
+              <option value="ingredients">Ingredients</option>
+              <option value="stars">Review Stars</option>
             </select>
           </div>
           <div className="navbar-search-input">
