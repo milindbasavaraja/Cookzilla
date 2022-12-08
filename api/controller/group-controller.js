@@ -46,7 +46,6 @@ export const joinGroup = (req, res) => {
 };
 
 export const getAllNonJoinedGroups = (req, res) => {
-  console.log("Getting non joined group");
   const token = req.cookies.access_token_cookzilla;
 
   if (!token) return res.status(401).json("Not Authenticated!");
@@ -60,16 +59,15 @@ export const getAllNonJoinedGroups = (req, res) => {
         console.log(error);
         return res.status(500).json(error);
       }
-      console.log(data);
+
       return res.status(200).json(data);
     });
   });
 };
 
 export const getGroupDetailsForAGivenNameAndCretor = (req, res) => {
-  console.log(req.params);
   const groupDetails = req.params.name.split("--");
-  console.log(groupDetails);
+
   const gName = groupDetails[0];
   const gCreator = groupDetails[1];
 
@@ -84,7 +82,7 @@ export const getGroupDetailsForAGivenNameAndCretor = (req, res) => {
         console.log(error);
         return res.status(500).json(error);
       }
-      console.log(data);
+
       return res.status(200).json(data);
     }
   );

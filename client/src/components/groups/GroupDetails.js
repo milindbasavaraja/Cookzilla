@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import Events from "../Events/Events";
 import "./css/groupDetails.css";
 
 const GroupDetails = () => {
@@ -48,7 +49,7 @@ const GroupDetails = () => {
   }, [groupNameCreator]);
 
   return (
-    <React.Fragment>
+    <div className="group-all-details">
       <div className="group-details">
         <div className="group-details-content">
           <h1 className="group-details-title">{groupName}</h1>
@@ -84,7 +85,9 @@ const GroupDetails = () => {
           </div>
         </div>
       </div>
-    </React.Fragment>
+      <hr></hr>
+      <Events groupNameCreator={groupNameCreator} />
+    </div>
   );
 };
 

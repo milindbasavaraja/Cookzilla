@@ -5,6 +5,7 @@ import authRoutes from "./routes/auth.js";
 import unitRoutes from "./routes/unit.js";
 import ingredientRoutes from "./routes/ingredient.js";
 import groupRoutes from "./routes/groups.js";
+import eventRoutes from "./routes/event.js";
 import cookieParser from "cookie-parser";
 import multer from "multer";
 
@@ -36,6 +37,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/units", unitRoutes);
 app.use("/api/ingredients", ingredientRoutes);
 app.use("/api/groups", groupRoutes);
+app.use("/api/events", eventRoutes);
 app.listen(8080, () => {
   console.log("Connected");
 });

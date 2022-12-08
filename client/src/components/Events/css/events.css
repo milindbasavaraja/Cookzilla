@@ -1,0 +1,26 @@
+.events-header {
+  position: relative;
+  left: 32%;
+
+  color: rgb(49, 47, 162);
+}
+
+.events-header h3 {
+  font-size: 6rem;
+}
+
+.events-toggle-buttons {
+  display: flex;
+  gap: 2rem;
+}
+
+.events-toggle-buttons-content {
+  padding: 1rem;
+}
+
+.events-toggle-buttons-content-cards {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
