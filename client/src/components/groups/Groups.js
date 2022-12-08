@@ -65,8 +65,8 @@ const Groups = () => {
         >
           Create Group
         </button>
+        <h1>Groups you are not part of!!</h1>
         <GroupLists availableGroupsProps={availableGroups} />
-        {console.log("The avg groups are", availableGroups)}
 
         <div
           className="offcanvas offcanvas-top"

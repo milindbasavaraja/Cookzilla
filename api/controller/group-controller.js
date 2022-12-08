@@ -65,3 +65,27 @@ export const getAllNonJoinedGroups = (req, res) => {
     });
   });
 };
+
+export const getGroupDetailsForAGivenNameAndCretor = (req, res) => {
+  console.log(req.params);
+  const groupDetails = req.params.name.split("--");
+  console.log(groupDetails);
+  const gName = groupDetails[0];
+  const gCreator = groupDetails[1];
+
+  const getGroupDetailsForGnameAndGcreatorQuery =
+    "SELECT g.gName, g.gCreator,g.gDesc,gm.memberName FROM `Group` g, GroupMembership gm WHERE g.gName = gm.gName AND g.gCreator = gm.gCreator AND g.gName = ? AND g.gCreator = ?";
+
+  db.query(
+    getGroupDetailsForGnameAndGcreatorQuery,
+    [gName, gCreator],
+    (error, data) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json(error);
+      }
+      console.log(data);
+      return res.status(200).json(data);
+    }
+  );
+};
