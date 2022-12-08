@@ -8,7 +8,7 @@ const Dropdown = (props) => {
 
   useEffect(() => {
     props.onSelect(ingredientSelected);
-  }, [ingredientSelected]);
+  }, [ingredientSelected, props]);
 
   const onClickItemHandler = (event) => {
     console.log(event.target.innerHTML);

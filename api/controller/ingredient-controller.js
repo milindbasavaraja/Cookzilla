@@ -2,7 +2,6 @@
 import { db } from "../db.js";
 
 export const getAllIngredients = (req, res) => {
-  console.log("Retriving Unit details");
   const getAllIngredientQueries = "SELECT iName FROM Ingredient";
 
   db.query(getAllIngredientQueries, [], (error, data) => {
@@ -13,7 +12,6 @@ export const getAllIngredients = (req, res) => {
 };
 
 export const addNewIngredients = (req, res) => {
-  console.log("Ingredient ", req.body.ingredients);
   const insertNewIngredients =
     "INSERT INTO Ingredient (`iName`,`purchaseLink`) VALUES ?";
   let ingredients = [];

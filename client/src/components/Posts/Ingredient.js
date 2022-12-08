@@ -1,16 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import Steps from "../UI/Steps/Steps";
 import "./css/ingredient.css";
 
 const Ingredient = (props) => {
-  
-
   const onAllIngrdientsSubmitted = (stepGoals) => {
     props.onStepsSubmitted(stepGoals);
   };
-
- 
 
   return (
     <div className="create-post-ingrdient">

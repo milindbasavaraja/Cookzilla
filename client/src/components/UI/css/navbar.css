@@ -14,6 +14,7 @@
 .links {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .link {
@@ -55,13 +56,6 @@
 .link-write {
   text-decoration: none;
   color: inherit;
-}
-
-.logout-button,
-.login-button,
-.create-post-button {
-  margin-left: 5px;
-  margin-right: 5px;
 }
 
 .navbar-category-select {

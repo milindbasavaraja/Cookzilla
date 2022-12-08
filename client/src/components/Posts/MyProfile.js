@@ -53,14 +53,23 @@ const MyProfile = () => {
                 <li key={post.recipeID}>
                   <div className="my-profile-post">
                     <div className="my-profile-posts-images">
-                      {post.pictureURL.map((img, index) => (
+                      {typeof post.pictureURL === "string" ? (
                         <img
-                          className="my-profile-posts-image"
-                          src={img}
-                          alt="My Profile Posts"
-                          key={index}
+                          src={post.pictureURL}
+                          className="home-post-image"
+                          alt="Posts"
+                          key={1}
                         />
-                      ))}
+                      ) : (
+                        post.pictureURL.map((picUrl, index) => (
+                          <img
+                            src={picUrl}
+                            className="home-post-image"
+                            alt="Posts"
+                            key={index}
+                          />
+                        ))
+                      )}
                     </div>
                   </div>
                   <div className="my-profile-posts-title">
