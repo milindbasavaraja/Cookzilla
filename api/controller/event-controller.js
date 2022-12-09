@@ -120,7 +120,6 @@ export const getEventPhotos = (req, res) => {
         console.log(error);
         return res.status(500).json(error);
       }
-      console.log(res.data);
       return res.status(200).json(data);
     }
   );

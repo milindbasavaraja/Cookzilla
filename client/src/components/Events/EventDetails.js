@@ -132,6 +132,7 @@ const EventDetails = () => {
         eID: eventId,
         imgURLs: imageURLS,
       });
+      window.location.reload(false);
     } catch (error) {
       console.log(error);
     }
@@ -159,28 +160,30 @@ const EventDetails = () => {
           {console.log("Boolean ", new Date(eventDate) < new Date())}
           {new Date(eventDate) < new Date() ? (
             <div className="expired-event-content">
-              <input
-                style={{ display: "none" }}
-                type="file"
-                id="create-post-photo-file"
-                onChange={onImageChangeHandler}
-                multiple
-              />
-
-              <label
-                htmlFor="create-post-photo-file"
-                className="btn btn-primary"
-              >
-                Upload Event Photos
-              </label>
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={onUploadPhotoHandler}
-              >
-                Upload
-              </button>
-
+              {memberNames.includes(userName) && (
+                <div>
+                  <input
+                    style={{ display: "none" }}
+                    type="file"
+                    id="create-post-photo-file"
+                    onChange={onImageChangeHandler}
+                    multiple
+                  />
+                  <label
+                    htmlFor="create-post-photo-file"
+                    className="btn btn-primary"
+                  >
+                    Upload Event Photos
+                  </label>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={onUploadPhotoHandler}
+                  >
+                    Upload
+                  </button>
+                </div>
+              )}
               {databaseImageUrls.length !== 0 && (
                 <div
                   id="carouselExampleControls"
@@ -199,7 +202,7 @@ const EventDetails = () => {
                     {databaseImageUrls.map(
                       (img, index) =>
                         index != 0 && (
-                          <div class="carousel-item" key={index}>
+                          <div className="carousel-item" key={index}>
                             <img
                               src={img.pictureURL}
                               className="d-block w-100"
