@@ -27,7 +27,12 @@ const GroupDetails = () => {
   const [showCreateEventButton, setShowCreateEventGroupButton] = useState(
     currentUser.userName === groupCreator
   );
-  console.log(1);
+
+  const [eventName, setEventName] = useState("");
+  const [eventDescription, setEventDescription] = useState("");
+
+  const [eventDate, setEventDate] = useState(new Date());
+  const [eventId, setEventId] = useState(0);
   useEffect(() => {
     if (groupDetails.length !== 0) {
       const groupDetail = groupDetails[0];
@@ -55,7 +60,7 @@ const GroupDetails = () => {
         );
 
         setGroupDetails(res.data);
-        console.log(2);
+
         // console.log("Hitting Steps API");
         // const resSteps = await axios.get(`/posts/steps/${postId}`);
         // console.log(resSteps);
@@ -64,7 +69,20 @@ const GroupDetails = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [groupNameCreator]);
+
+  const onEventNameChangeHandler = (event) => {
+    setEventName(event.target.value);
+  };
+
+  const onEventDescriptionChangeHandler = (event) => {
+    setEventDescription(event.target.value);
+  };
+
+  const onDateChangeHandler = (event) => {
+    console.log(event.target.value);
+    setEventDate(new Date(event.target.value));
+  };
 
   const onJoinGroupHandler = () => {
     const joinGroup = async () => {
@@ -82,6 +100,30 @@ const GroupDetails = () => {
       }
     };
     joinGroup();
+  };
+
+  const onCreateEventHandler = () => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.post("/events/", {
+          gName: groupName,
+          gCreator: groupCreator,
+          eName: eventName,
+          eDescription: eventDescription,
+          eDate: eventDate.toISOString().slice(0, 19).replace("T", " "),
+        });
+
+        await axios.post("/events/rsvp/", {
+          userName: groupCreator,
+          eID: res.data.insertId,
+          response: "Y",
+        });
+        navigation(`/events/${res.data.insertId}`);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
   };
 
   return (
@@ -110,12 +152,87 @@ const GroupDetails = () => {
             </div>
           )}
           {showCreateEventButton && (
-            <div className="d-grid gap-2">
+            /* <div className="d-grid gap-2">
               <button className="btn btn-primary" type="button">
                 Create Event
               </button>
-            </div>
+            </div>*/
+
+            <button
+              className="btn btn-primary"
+              type="button"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasTop"
+              aria-controls="offcanvasTop"
+            >
+              Create Event
+            </button>
           )}
+
+          <div
+            className="offcanvas offcanvas-top"
+            tabIndex="-1"
+            id="offcanvasTop"
+            aria-labelledby="offcanvasTopLabel"
+          >
+            <div className="offcanvas-header">
+              <h5 className="offcanvas-title" id="offcanvasTopLabel">
+                Create New Event
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="offcanvas"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="offcanvas-body">
+              <div className="row g-4">
+                <div className="col-12">
+                  <label htmlFor="inputAddress" className="form-label">
+                    Event Name
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="inputGroupName"
+                    placeholder="Enter Event Name"
+                    value={eventName}
+                    onChange={onEventNameChangeHandler}
+                  />
+                </div>
+                <div className="form-floating">
+                  <textarea
+                    className="form-control"
+                    placeholder="Leave a event description here"
+                    id="floatingTextarea2"
+                    style={{ height: "100px" }}
+                    value={eventDescription}
+                    onChange={onEventDescriptionChangeHandler}
+                  ></textarea>
+                  <label htmlFor="floatingTextarea2">Event Description</label>
+                </div>
+                <div className="col-4" style={{ marginBottom: "1rem" }}>
+                  <label htmlFor="start">Event date:</label>
+
+                  <input
+                    type="date"
+                    id="start"
+                    name="trip-start"
+                    onChange={onDateChangeHandler}
+                  />
+                </div>
+              </div>
+
+              <button
+                type="button"
+                className="btn btn-outline-primary create-group"
+                onClick={onCreateEventHandler}
+              >
+                Create Event
+              </button>
+            </div>
+          </div>
         </div>
 
         <div className="group-details-members">

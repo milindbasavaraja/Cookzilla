@@ -51,7 +51,6 @@ export const login = (req, res) => {
         .status(404)
         .json("Incorrect Password. Please update the password");
 
-    console.log("The data is", data[0]);
     //Creating json web token
     const jwtToken = jwt.sign(
       { id: data[0].userName },

@@ -20,7 +20,6 @@ const Groups = () => {
     setGroupDesc(event.target.value);
   };
   const onCreateGroupHandler = () => {
-    console.log(`The name ${groupName} and desc ${groupDesc}`);
     const fetchData = async () => {
       try {
         await axios.post("/groups/", {

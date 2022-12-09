@@ -20,7 +20,7 @@ const Events = (props) => {
           aria-expanded="false"
           aria-controls="multiCollapseExample1"
           style={{
-            backgroundColor: isActiveButton1 ? "red" : "blue",
+            backgroundColor: isActiveButton1 ? "red" : "#0d6efd",
           }}
           onClick={() => {
             if (isActiveButton1) {
@@ -40,7 +40,7 @@ const Events = (props) => {
           aria-expanded="false"
           aria-controls="multiCollapseExample2"
           style={{
-            backgroundColor: isActiveButton2 ? "red" : "blue",
+            backgroundColor: isActiveButton2 ? "red" : "#0d6efd",
           }}
           onClick={() => {
             if (isActiveButton2) {

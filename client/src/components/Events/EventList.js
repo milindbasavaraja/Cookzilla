@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios, { all } from "axios";
+import { Link } from "react-router-dom";
 
 const EventList = (props) => {
   const [allAvailableEvents, setAllAvailableEvents] = useState([]);
@@ -62,7 +63,9 @@ const EventList = (props) => {
                   >
                     {availableEvent.eDesc}
                   </p>
-                  <button className="btn btn-primary">Register</button>
+                  <Link to={`/events/${availableEvent.eID}`}>
+                    <button className="btn btn-primary">Explore Event</button>
+                  </Link>
                 </div>
               </div>
             ))}
@@ -89,7 +92,9 @@ const EventList = (props) => {
                   >
                     {expiredEvent.eDesc}
                   </p>
-                  <button className="btn btn-primary">Explore Event</button>
+                  <Link to={`/events/${expiredEvent.eID}`}>
+                    <button className="btn btn-primary">Explore Event</button>
+                  </Link>
                 </div>
               </div>
             ))}

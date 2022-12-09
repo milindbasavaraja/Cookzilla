@@ -18,7 +18,7 @@ export const addNewIngredients = (req, res) => {
   req.body.ingredients.map((ingredient) => {
     ingredients.push([ingredient.iName, ingredient.purchaseLink]);
   });
-  console.log(ingredients);
+  
   db.query(insertNewIngredients, [ingredients], (error, data) => {
     if (error) return res.status(500).json(error);
 

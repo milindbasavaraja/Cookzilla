@@ -10,7 +10,7 @@ export const addNewGroup = (req, res) => {
     const insertNewGroup =
       "INSERT INTO `Group` (`gName`,`gCreator`,`gDesc`) VALUES (?)";
 
-    console.log(req.body);
+   
     db.query(
       insertNewGroup,
       [[req.body.gName, userInfo.id, req.body.gDesc]],
@@ -32,7 +32,7 @@ export const joinGroup = (req, res) => {
     const insertNewGroup =
       "INSERT INTO GroupMembership (`gName`,`memberName`,`gCreator`) VALUES (?)";
 
-    console.log(req.body);
+    
     db.query(
       insertNewGroup,
       [[req.body.gName, req.body.memberName, req.body.gCreator]],

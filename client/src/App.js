@@ -11,6 +11,7 @@ import MyProfile from "./components/Posts/MyProfile";
 import Groups from "./components/groups/Groups";
 import GroupDetails from "./components/groups/GroupDetails";
 import Events from "./components/Events/Events";
+import EventDetails from "./components/Events/EventDetails";
 
 const Layout = () => {
   return (
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: "/groups/:name",
         element: <GroupDetails />,
+      },
+      {
+        path: "/events/:id",
+        element: <EventDetails />,
       },
     ],
   },
