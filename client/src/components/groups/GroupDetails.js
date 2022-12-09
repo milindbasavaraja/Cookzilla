@@ -111,11 +111,7 @@ const GroupDetails = () => {
           )}
           {showCreateEventButton && (
             <div className="d-grid gap-2">
-              <button
-                className="btn btn-primary"
-                type="button"
-                onClick={onJoinGroupHandler}
-              >
+              <button className="btn btn-primary" type="button">
                 Create Event
               </button>
             </div>
