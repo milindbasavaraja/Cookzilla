@@ -10,6 +10,7 @@ import Navbar from "./components/UI/Navbar";
 import MyProfile from "./components/Posts/MyProfile";
 import Groups from "./components/groups/Groups";
 import GroupDetails from "./components/groups/GroupDetails";
+import Events from "./components/Events/Events";
 
 const Layout = () => {
   return (
@@ -45,6 +46,7 @@ const router = createBrowserRouter([
         path: "/groups",
         element: <Groups />,
       },
+
       {
         path: "/groups/:name",
         element: <GroupDetails />,

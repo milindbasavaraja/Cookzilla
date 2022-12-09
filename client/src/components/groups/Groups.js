@@ -30,6 +30,7 @@ const Groups = () => {
         await axios.post("/groups/join-group", {
           gName: groupName,
           memberName: currentUser.userName,
+          gCreator: currentUser.userName,
         });
       } catch (error) {
         console.log(error);
@@ -44,7 +45,7 @@ const Groups = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get("/groups/");
-        console.log(res.data);
+
         setAvailableGroups(res.data);
       } catch (error) {
         console.log(error);

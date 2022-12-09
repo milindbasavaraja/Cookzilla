@@ -4,10 +4,12 @@ import { useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../../context/auth-context";
 import { Link } from "react-router-dom";
+import GroupLists from "../groups/GroupLists";
 
 const MyProfile = () => {
   const [userInfo, setUserInfo] = useState({});
   const [userPosts, setUserPosts] = useState([]);
+  const [allJoinedGroups, setAllJoinedGroups] = useState([]);
 
   const { currentUser } = useContext(AuthContext);
 
@@ -18,12 +20,16 @@ const MyProfile = () => {
         setUserInfo(userInfoRes.data);
         const userPostsRes = await axios.get("/user/user-posts");
         setUserPosts(userPostsRes.data);
+
+        const res = await axios.get("/groups/all-joined-groups");
+        setAllJoinedGroups(res.data);
       } catch (error) {
         console.log(error);
       }
     };
     fetchData();
   }, []);
+
   return (
     <React.Fragment>
       {!currentUser ? (
@@ -48,6 +54,7 @@ const MyProfile = () => {
             <p>{userInfo.profile}</p>
           </div>
           <div className="my-profile-posts">
+            <h5>Your Posts</h5>
             <ol>
               {userPosts.map((post) => (
                 <li key={post.recipeID}>
@@ -83,6 +90,11 @@ const MyProfile = () => {
                 </li>
               ))}
             </ol>
+          </div>
+
+          <div className="my-profile-groups-part">
+            <h5 className="my-profile-groups-part-h5">Groups You are Part Of!!!!</h5>
+            <GroupLists availableGroupsProps={allJoinedGroups} />
           </div>
         </div>
       )}

@@ -15,11 +15,12 @@
   flex-wrap: wrap;
   align-items: flex-start;
   flex-direction: row;
-  max-height: 100vh;
+  max-height: 50vh;
   max-width: 130vh;
   border: 3px solid #000;
   box-shadow: 10px 5px 5px teal;
   border-radius: 5%;
+  overflow: scroll;
 }
 
 .post-content-cards img {
@@ -27,7 +28,6 @@
   border: 3px solid #000;
   box-shadow: 3px 3px 8px 0px rgba(0, 0, 0, 0.3);
   max-width: 23vw;
-  box-shadow: 10px 5px 5px rgb(0, 255, 238);
 }
 
 .post-menu {

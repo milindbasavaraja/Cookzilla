@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import "./css/groupList.css";
 
 const GroupLists = (props) => {
-  console.log(props.availableGroupsProps);
   return (
     <div className="group-list">
       {props.availableGroupsProps.map((agroup, index) => (

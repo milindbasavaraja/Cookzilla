@@ -1,19 +1,33 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/auth-context";
 import Events from "../Events/Events";
 import "./css/groupDetails.css";
 
 const GroupDetails = () => {
+  const navigation = useNavigate();
   const [groupDetails, setGroupDetails] = useState([]);
   const [groupName, setGroupName] = useState("");
   const [groupCreator, setGroupCreator] = useState("");
   const [groupDescription, setGroupDescription] = useState("");
   const [memberNames, setMemberNames] = useState([]);
-
+  const { currentUser } = useContext(AuthContext);
   const location = useLocation();
   const groupNameCreator = location.pathname.split("/")[2];
+  const userName = currentUser.userName;
+  const [showJoinGroupButton, setShowJoinGroupButton] = useState(
+    !memberNames.includes(userName)
+  );
 
+  const [showCheckEventsGroupButton, setShowEventGroupButton] = useState(
+    memberNames.includes(userName)
+  );
+
+  const [showCreateEventButton, setShowCreateEventGroupButton] = useState(
+    currentUser.userName === groupCreator
+  );
+  console.log(1);
   useEffect(() => {
     if (groupDetails.length !== 0) {
       const groupDetail = groupDetails[0];
@@ -28,7 +42,10 @@ const GroupDetails = () => {
         return Array.from(prevSet);
       })
     );
-  }, [groupDetails]);
+    setShowJoinGroupButton(!memberNames.includes(userName));
+    setShowEventGroupButton(memberNames.includes(userName));
+    setShowCreateEventGroupButton(currentUser.userName === groupCreator);
+  }, [groupDetails, showJoinGroupButton]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,6 +55,7 @@ const GroupDetails = () => {
         );
 
         setGroupDetails(res.data);
+        console.log(2);
         // console.log("Hitting Steps API");
         // const resSteps = await axios.get(`/posts/steps/${postId}`);
         // console.log(resSteps);
@@ -46,7 +64,25 @@ const GroupDetails = () => {
       }
     };
     fetchData();
-  }, [groupNameCreator]);
+  }, []);
+
+  const onJoinGroupHandler = () => {
+    const joinGroup = async () => {
+      try {
+        await axios.post("/groups/join-group", {
+          gName: groupName,
+          memberName: currentUser.userName,
+          gCreator: groupCreator,
+        });
+        setShowJoinGroupButton(false);
+        setShowEventGroupButton(true);
+        window.location.reload(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    joinGroup();
+  };
 
   return (
     <div className="group-all-details">
@@ -56,18 +92,34 @@ const GroupDetails = () => {
           <span className="group-details-title-span-creator">
             Created By: {groupCreator}
           </span>
-
           <div className="group-details-content-description">
             <p className="group-details-content-description-p">
               {groupDescription}
             </p>
           </div>
 
-          <div className="d-grid gap-2">
-            <button className="btn btn-primary" type="button">
-              Join Group
-            </button>
-          </div>
+          {showJoinGroupButton && (
+            <div className="d-grid gap-2">
+              <button
+                className="btn btn-primary"
+                type="button"
+                onClick={onJoinGroupHandler}
+              >
+                Join Group
+              </button>
+            </div>
+          )}
+          {showCreateEventButton && (
+            <div className="d-grid gap-2">
+              <button
+                className="btn btn-primary"
+                type="button"
+                onClick={onJoinGroupHandler}
+              >
+                Create Event
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="group-details-members">
@@ -86,7 +138,9 @@ const GroupDetails = () => {
         </div>
       </div>
       <hr></hr>
-      <Events groupNameCreator={groupNameCreator} />
+      {showCheckEventsGroupButton && (
+        <Events groupNameCreator={groupNameCreator} />
+      )}
     </div>
   );
 };
