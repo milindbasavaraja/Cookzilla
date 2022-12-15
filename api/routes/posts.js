@@ -31,9 +31,7 @@ router.post("/add-tags", addRecipeTags);
 router.post("/add-steps", addRecipeSteps);
 router.delete("/:id", deletePostById);
 router.put("/:id", updatePostById);
-router.post("/images/review", addReviewPhoto);
-router.post("/:id/review",addReview);
-// router.delete("/:id/review", deletePostById);
-// router.put("/:id/review", updatePostById);
+router.post("/review/images", addReviewPhoto);
+router.post("/review/:id/",addReview);
 
 export default router;

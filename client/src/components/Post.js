@@ -90,8 +90,27 @@ const Post = () => {
           <div key={step.stepNo}>
             {step.stepNo}. {step.sDesc}
           </div>
-        ))}
+        ))}  
       </div>
+      <div className="Post-user-Review">
+        <label for="revTitle">Review Title</label>
+        <textarea class="form-control" id="revTitle" rows="1"></textarea>
+        <label for="revDesc">Review Description</label>
+        <textarea class="form-control" id="revDesc" rows="5"></textarea>
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="stars" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Star Rating 
+        </button>
+        <div class="dropdown-menu" aria-labelledby="stars">
+          <a class="dropdown-item" href="#">1</a>
+          <a class="dropdown-item" href="#">2</a>
+          <a class="dropdown-item" href="#">3</a>
+          <a class="dropdown-item" href="#">4</a>
+          <a class="dropdown-item" href="#">5</a>
+        </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">post</button>
     </div>
   );
 };
