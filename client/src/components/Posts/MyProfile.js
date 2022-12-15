@@ -2,11 +2,14 @@ import React, { useContext, useEffect } from "react";
 import "./css/myprofile.css";
 import { useState } from "react";
 import axios from "axios";
-import { AuthContext } from "../context/auth-context";
+import { AuthContext } from "../../context/auth-context";
+import { Link } from "react-router-dom";
+import GroupLists from "../groups/GroupLists";
 
 const MyProfile = () => {
   const [userInfo, setUserInfo] = useState({});
   const [userPosts, setUserPosts] = useState([]);
+  const [allJoinedGroups, setAllJoinedGroups] = useState([]);
 
   const { currentUser } = useContext(AuthContext);
 
@@ -17,12 +20,16 @@ const MyProfile = () => {
         setUserInfo(userInfoRes.data);
         const userPostsRes = await axios.get("/user/user-posts");
         setUserPosts(userPostsRes.data);
+
+        const res = await axios.get("/groups/all-joined-groups");
+        setAllJoinedGroups(res.data);
       } catch (error) {
         console.log(error);
       }
     };
     fetchData();
   }, []);
+
   return (
     <React.Fragment>
       {!currentUser ? (
@@ -47,30 +54,47 @@ const MyProfile = () => {
             <p>{userInfo.profile}</p>
           </div>
           <div className="my-profile-posts">
+            <h5>Your Posts</h5>
             <ol>
               {userPosts.map((post) => (
                 <li key={post.recipeID}>
                   <div className="my-profile-post">
                     <div className="my-profile-posts-images">
-                      {post.pictureURL.map((img, index) => (
+                      {typeof post.pictureURL === "string" ? (
                         <img
-                          className="my-profile-posts-image"
-                          src={img}
-                          alt="My Profile Posts"
-                          key={index}
+                          src={post.pictureURL}
+                          className="home-post-image"
+                          alt="Posts"
+                          key={1}
                         />
-                      ))}
+                      ) : (
+                        post.pictureURL.map((picUrl, index) => (
+                          <img
+                            src={picUrl}
+                            className="home-post-image"
+                            alt="Posts"
+                            key={index}
+                          />
+                        ))
+                      )}
                     </div>
                   </div>
                   <div className="my-profile-posts-title">
                     <h1>{post?.title}</h1>
                   </div>
                   <div>
-                    <button className="my-profile-button"> Read More</button>
+                    <Link className="link" to={`/post/${post.recipeID}`}>
+                      <button className="my-profile-button"> Read More</button>
+                    </Link>
                   </div>
                 </li>
               ))}
             </ol>
+          </div>
+
+          <div className="my-profile-groups-part">
+            <h5 className="my-profile-groups-part-h5">Groups You are Part Of!!!!</h5>
+            <GroupLists availableGroupsProps={allJoinedGroups} />
           </div>
         </div>
       )}

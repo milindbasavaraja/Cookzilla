@@ -1,0 +1,5 @@
+.nav-bar-log-in-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

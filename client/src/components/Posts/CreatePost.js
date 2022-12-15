@@ -4,7 +4,8 @@ import "./css/createPost.css";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
-import Steps from "./UI/Steps/Steps";
+import Steps from "../UI/Steps/Steps";
+import Ingredient from "./Ingredient";
 
 const CreatePost = () => {
   const state = useLocation().state;
@@ -17,6 +18,8 @@ const CreatePost = () => {
   const [customTags, setCustomTags] = useState("");
   const [invalidInput, setInvalidInput] = useState(false);
   const [recipeSteps, setRecipeSteps] = useState([]);
+  const [ingredientRecipes, setIngredientRecipes] = useState([]);
+  const [newIngredients, setNewIngredient] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,13 +52,12 @@ const CreatePost = () => {
     const customTagsList = customTags.split(",");
     const allTags = [...checkedTags, ...customTagsList];
 
-    console.log(allTags);
-
     if (
       imageURLS.length === 0 ||
       allTags.length === 0 ||
       title.trim().length === 0 ||
-      recipeSteps.length === 0
+      recipeSteps.length === 0 ||
+      ingredientRecipes.length === 0
     ) {
       setInvalidInput(true);
       return;
@@ -88,7 +90,16 @@ const CreatePost = () => {
         recipeID,
         steps: recipeSteps,
       });
-      // desc: description,
+      if (newIngredients.length !== 0) {
+        await axios.post("/ingredients/new-ingredients/", {
+          ingredients: newIngredients,
+        });
+      }
+
+      await axios.post("/posts/ingredients", {
+        recipeID,
+        ingredients: ingredientRecipes,
+      });
 
       navigation("/");
     } catch (error) {
@@ -166,14 +177,40 @@ const CreatePost = () => {
   };
 
   const onAllStepsSubmitted = (stepGoals) => {
-    stepGoals.map((step, index) => {
+    stepGoals.map((step, index) =>
       setRecipeSteps((prevStep) => [
         ...prevStep,
         { text: step.text, id: stepGoals.length - index },
-      ]);
-    });
+      ])
+    );
     // setRecipeSteps((prevSteps) => [...prevSteps, JSON.parse(stepGoals)]);
     // console.log(recipeSteps);
+  };
+
+  const onAllIngredientsSubmitted = (ingredients) => {
+    ingredients.map((ingredient, index) => {
+      if (ingredient.purchaseLink.trim().length !== 0) {
+        console.log("Setting purchaselink");
+        setNewIngredient((prevStep) => [
+          ...prevStep,
+          {
+            id: index,
+            iName: ingredient.text,
+            purchaseLink: ingredient.purchaseLink,
+          },
+        ]);
+      }
+
+      setIngredientRecipes((prevStep) => [
+        ...prevStep,
+        {
+          id: index,
+          iName: ingredient.text,
+          unitName: ingredient.ingredientUnit,
+          amount: ingredient.quantity,
+        },
+      ]);
+    });
   };
 
   return (
@@ -189,10 +226,19 @@ const CreatePost = () => {
             onChange={onTitleChangeHandler}
           />
           <div className="create-post-content-editor-container">
-            <Steps onStepsSubmitted={onAllStepsSubmitted} />
+            <Steps
+              onStepsSubmitted={onAllStepsSubmitted}
+              buttonTitle={"Add Step"}
+              submitTitle={"Submit All Steps"}
+              labelTitle={"Recipe Steps"}
+            />
           </div>
         </div>
         <div className="create-post-menu">
+          <div className="create-post-menu-item">
+            <Ingredient onStepsSubmitted={onAllIngredientsSubmitted} />
+          </div>
+
           <div className="create-post-menu-item">
             <input
               style={{ display: "none" }}
@@ -258,13 +304,15 @@ const CreatePost = () => {
 
             <div className="create-post-menu-buttons">
               <button
-                className="create-post-menu-buttons-update"
+                type="button"
+                className="btn btn-primary"
                 onClick={onPublishPostHandler}
               >
                 Post
               </button>
             </div>
           </div>
+
           {invalidInput && (
             <div className="create-post-error">
               <h1>Please Select Images, Tags and Input Title, Description</h1>
@@ -277,63 +325,3 @@ const CreatePost = () => {
 };
 
 export default CreatePost;
-
-//{
-/* <div className="create-post-menu-item">
-          <div className="create-post-menu-item-category">
-            <input
-              type="radio"
-              name="cat"
-              value="art"
-              id="art"
-              onChange={onCategoryChangeHandler}
-              checked={category === "art"}
-            />
-            <label htmlFor="art">Art</label>
-          </div>
-          <div className="create-post-menu-item-category">
-            <input
-              type="radio"
-              name="cat"
-              value="science"
-              id="science"
-              onChange={onCategoryChangeHandler}
-              checked={category === "science"}
-            />
-            <label htmlFor="science">Science</label>
-          </div>
-          <div className="create-post-menu-item-category">
-            <input
-              type="radio"
-              name="cat"
-              value="technology"
-              id="technology"
-              onChange={onCategoryChangeHandler}
-              checked={category === "technology"}
-            />
-            <label htmlFor="tech">Technology</label>
-          </div>
-          <div className="create-post-menu-item-category">
-            <input
-              type="radio"
-              name="cat"
-              value="cinema"
-              id="cinema"
-              onChange={onCategoryChangeHandler}
-              checked={category === "cinema"}
-            />
-            <label htmlFor="cinema">Cinema</label>
-          </div>
-          <div className="create-post-menu-item-category">
-            <input
-              type="radio"
-              name="cat"
-              value="design"
-              id="design"
-              onChange={onCategoryChangeHandler}
-              checked={category === "design"}
-            />
-            <label htmlFor="design">Design</label>
-          </div>
-        </div> */
-//}

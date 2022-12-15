@@ -12,7 +12,6 @@ export const getUserInfo = (req, res) => {
   }
 
   jwt.verify(token, "userLoggedInCookzilla", (error, userInfo) => {
-    console.log(userInfo);
     if (error) {
       res.status(403).json("Token is not valid. Please Logout and Login again");
     }
@@ -38,7 +37,6 @@ export const getAllPostsForUser = (req, res) => {
   }
 
   jwt.verify(token, "userLoggedInCookzilla", (error, userInfo) => {
-    console.log(userInfo);
     if (error) {
       res.status(403).json("Token is not valid. Please Logout and Login again");
     }
@@ -56,24 +54,3 @@ export const getAllPostsForUser = (req, res) => {
     });
   });
 };
-
-[
-  {
-    recipeID: 1,
-    title: "Bisibelebaath",
-    pictureURL: [
-      "https://my-photos-bucket-smart-photos.s3.amazonaws.com/Bisibelebaath/Bisi_Bele_Bath_(Bisibelebath).jpeg",
-      "https://my-photos-bucket-smart-photos.s3.amazonaws.com/Bisibelebaath/bisi-bele-bath-recipe.jpg",
-      "https://my-photos-bucket-smart-photos.s3.amazonaws.com/Bisibelebaath/download.jpeg",
-    ],
-  },
-  {
-    recipeID: 2,
-    title: "Pulao",
-    pictureURL: [
-      "https://my-photos-bucket-smart-photos.s3.amazonaws.com/Pulao/veg-pulao-2.jpeg",
-      "https://my-photos-bucket-smart-photos.s3.amazonaws.com/Pulao/veg-pulao-recipe.jpg",
-      "https://my-photos-bucket-smart-photos.s3.amazonaws.com/Pulao/veg-pulao.jpeg",
-    ],
-  },
-];

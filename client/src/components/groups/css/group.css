@@ -1,0 +1,10 @@
+.group-create-group {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.create-group {
+  width: 100%;
+}

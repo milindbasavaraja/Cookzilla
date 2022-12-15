@@ -12,7 +12,9 @@ const CourseGoalList = (props) => {
           id={goal.id}
           onDelete={props.onDeleteItem}
         >
-          {goal.text}
+          {goal.text}{" "}
+          {goal.ingredientUnit &&
+            `----> ${goal.quantity} - ${goal.ingredientUnit}  ${goal.purchaseLink}`}
         </CourseGoalItem>
       ))}
     </ul>

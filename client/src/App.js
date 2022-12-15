@@ -1,13 +1,17 @@
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import { Fragment } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Home from "./components/Home";
-import Post from "./components/Post";
-import CreatePost from "./components/CreatePost";
-import Register from "./components/Register";
-import Login from "./components/Login";
+import Home from "./components/Posts/Home";
+import Post from "./components/Posts/Post";
+import CreatePost from "./components/Posts/CreatePost";
+import Register from "./components/auth/Register";
+import Login from "./components/auth/Login";
 import Navbar from "./components/UI/Navbar";
-import MyProfile from "./components/MyProfile";
+import MyProfile from "./components/Posts/MyProfile";
+import Groups from "./components/groups/Groups";
+import GroupDetails from "./components/groups/GroupDetails";
+import Events from "./components/Events/Events";
+import EventDetails from "./components/Events/EventDetails";
 
 const Layout = () => {
   return (
@@ -38,6 +42,19 @@ const router = createBrowserRouter([
       {
         path: "/my-profile",
         element: <MyProfile />,
+      },
+      {
+        path: "/groups",
+        element: <Groups />,
+      },
+
+      {
+        path: "/groups/:name",
+        element: <GroupDetails />,
+      },
+      {
+        path: "/events/:id",
+        element: <EventDetails />,
       },
     ],
   },

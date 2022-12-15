@@ -11,8 +11,10 @@ const Menu = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const res = await axios.get(`/posts/?cat=${category}`);
-        // setPosts(res.data);
+        console.log("The catrgory is");
+        const res = await axios.get(`/posts/?tags=${category[0]}`);
+        console.log("The data retrieved in menu is", res.data);
+        setPosts(res.data);
       } catch (error) {
         console.log(error);
       }

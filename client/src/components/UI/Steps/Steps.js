@@ -9,9 +9,16 @@ const Steps = (props) => {
   const [courseGoals, setCourseGoals] = useState([]);
 
   const addGoalHandler = (enteredText) => {
+    console.log("Text entered", enteredText);
     setCourseGoals((prevGoals) => {
       const updatedGoals = [...prevGoals];
-      updatedGoals.unshift({ text: enteredText, id: Math.random().toString() });
+      updatedGoals.unshift({
+        text: enteredText.text,
+        id: Math.random().toString(),
+        ingredientUnit: enteredText.ingredientUnit,
+        quantity: enteredText.quantity,
+        purchaseLink: enteredText.purchaseLink,
+      });
       return updatedGoals;
     });
   };
@@ -44,18 +51,14 @@ const Steps = (props) => {
         <CourseInput
           onAddGoal={addGoalHandler}
           onSubmitGoal={onSubmitGoalHandler}
+          buttonTitle={props.buttonTitle}
+          submitTitle={props.submitTitle}
+          labelTitle={props.labelTitle}
+          displayUnitButton={props.displayUnitButton}
+          placeholder={props.placeholder}
         />
       </section>
-      <section id="goals">
-        {content}
-        {/* {courseGoals.length > 0 && (
-          <CourseGoalList
-            items={courseGoals}
-            onDeleteItem={deleteItemHandler}
-          />
-        ) // <p style={{ textAlign: 'center' }}>No goals found. Maybe add one?</p>
-        } */}
-      </section>
+      <section id="goals">{content}</section>
     </div>
   );
 };
