@@ -9,6 +9,8 @@ import { AuthContext } from "../../context/auth-context";
 const Post = () => {
   const [post, setPost] = useState({});
   const [steps, setSteps] = useState([]);
+  const [tags, setTags] = useState([]);
+
   const location = useLocation();
   const navigation = useNavigate();
 
@@ -21,8 +23,11 @@ const Post = () => {
         setPost(res.data);
 
         const resSteps = await axios.get(`/posts/steps/${postId}`);
-
         setSteps(resSteps.data);
+
+        const resTags = await axios.get(`/posts/tags/${postId}`);
+        setTags(resTags.data);
+        console.log(resTags.data);
       } catch (error) {
         console.log(error);
       }
@@ -84,8 +89,14 @@ const Post = () => {
               ></i>
             </div>
           )}
+
+          <h3>Tags: </h3>
+
+          {tags.length !== 0 &&
+            tags.map((tag, index) => <h5 key={index}> {tag.tagText} </h5>)}
         </div>
         <h1 className="post-content-single-h1">{post.title}</h1>
+        <h4>Recipe Ingredients</h4>
         <h3 className="post-content-single-h3">Recipe Steps</h3>
         <div className="accordion" id="accordionExample">
           {steps.map((step) => (
@@ -118,7 +129,7 @@ const Post = () => {
         </div>
       </div>
 
-      <Menu category={post.tagText} postId={postId} />
+      <Menu postId={postId} />
     </div>
   );
 };

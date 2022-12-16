@@ -8,6 +8,7 @@ import "./css/menu.css";
 const Menu = (props) => {
   const [reviews, setReviews] = useState([]);
   const [reviewTitle, setReviewTitle] = useState("");
+  const [reviewRating, setReviewRating] = useState(1);
   const [reviewDescription, setReviewDescription] = useState("");
   const [img, setImg] = useState([]);
   const { currentUser } = useContext(AuthContext);
@@ -16,7 +17,7 @@ const Menu = (props) => {
     const fetchData = async () => {
       try {
         const res = await axios.get(`/posts/reviews/${props.postId}`);
-        console.log(res.data);
+        //console.log(res.data);
         setReviews(res.data);
       } catch (error) {
         console.log(error);
@@ -29,17 +30,21 @@ const Menu = (props) => {
     setReviewTitle(event.target.value);
   };
 
+  const onRatingChangeHandler = (event) => {
+    setReviewRating(event.target.value);
+  };
+
   const onReviewDescriptionChangeHandler = (event) => {
     setReviewDescription(event.target.value);
   };
 
   const onImageChangeHandler = (event) => {
     setImg(event.target.files);
-    console.log(event.target.files);
+    //console.log(event.target.files);
   };
 
   const uploadImage = async (images) => {
-    console.log("Thw images are: ", images);
+    //console.log("Thw images are: ", images);
     let imageURLS = [];
     const s3Url = "https://my-photos-bucket-smart-photos.s3.amazonaws.com/";
     const apiGatewayUrl =
@@ -69,25 +74,25 @@ const Menu = (props) => {
       };
 
       let url = apiGatewayUrl + file.name;
-      console.log(url);
+      //console.log(url);
       try {
         await axios.put(url, file, additionalParams);
-        console.log(`Image ${file.name} uploaded`);
+        // console.log(`Image ${file.name} uploaded`);
         let imageURL = s3Url + file.name;
-        console.log(`Adding imageURL ${imageURL} to our list`);
+        //  console.log(`Adding imageURL ${imageURL} to our list`);
         imageURLS = [...imageURLS, imageURL];
       } catch (error) {
         console.log(error);
       }
     }
-    console.log(imageURLS);
+    //console.log(imageURLS);
     return imageURLS;
   };
 
   const onUploadPhotoHandler = async () => {
     try {
       const imageURLS = await uploadImage(img);
-      console.log("The image Urls are: ", imageURLS);
+      //  console.log("The image Urls are: ", imageURLS);
       await axios.post("/posts/reviews/pictures", {
         recipeID: props.postId,
         imgURLs: imageURLS,
@@ -107,7 +112,7 @@ const Menu = (props) => {
           postID: props.postId,
           revTitle: reviewTitle,
           revDesc: reviewDescription,
-          stars: 0,
+          stars: reviewRating,
         });
         setReviewTitle("");
         setReviewDescription("");
@@ -172,6 +177,19 @@ const Menu = (props) => {
                 onChange={onReviewDescriptionChangeHandler}
               ></textarea>
               <label htmlFor="floatingTextarea2">Review Description</label>
+            </div>
+            <div className="form-floating mb-3">
+              <input
+                type="number"
+                className="form-control"
+                id="floatingInput"
+                placeholder="Review Rating Min:1 Max 5"
+                min="1"
+                max="5"
+                value={reviewRating}
+                onChange={onRatingChangeHandler}
+              />
+              <label htmlFor="floatingInput">Review Rating</label>
             </div>
             <div>
               <input

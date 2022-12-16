@@ -203,6 +203,23 @@ export const getAllStepsById = (req, res) => {
   });
 };
 
+export const getAllTagsById = (req, res) => {
+  //console.log("Getting steps by id");
+  const getPostStepsQuery =
+    "SELECT `recipeID`,`tagText` FROM RecipeTag WHERE recipeID = ?";
+
+  db.query(getPostStepsQuery, [req.params.id], (error, data) => {
+    if (error) {
+      console.log("Error happened while querying per ID", error);
+      return res.status(500).send(error);
+    }
+
+    // console.log(data);
+
+    return res.status(200).json(data);
+  });
+};
+
 export const addRecipeIngredients = (req, res) => {
   const insertStepsQuery =
     "INSERT INTO RecipeIngredient (`recipeID`,`iName`,`unitName`,`amount`) VALUES ?";

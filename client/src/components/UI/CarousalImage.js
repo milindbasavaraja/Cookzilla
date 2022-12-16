@@ -10,7 +10,7 @@ const CarousalImage = (props) => {
         const resPhotos = await axios.get(
           `/posts/reviews/photos/${props.postId}-${props.userName}`
         );
-        console.log(resPhotos.data);
+        // console.log(resPhotos.data);
         setReviewImages(resPhotos.data);
       } catch (error) {
         console.log(error);
@@ -20,7 +20,6 @@ const CarousalImage = (props) => {
   }, []);
   return (
     <div>
-      {console.log(images.length, props.userName)}
       {images.length === 0 ? (
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png"
@@ -35,7 +34,6 @@ const CarousalImage = (props) => {
         >
           <div className="carousel-inner">
             <div className="carousel-item active">
-              {console.log(images[0])}
               <img
                 src={images[0].pictureURL}
                 className="d-block w-100"
