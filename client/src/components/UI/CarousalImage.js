@@ -40,6 +40,7 @@ const CarousalImage = (props) => {
                 src={images[0].pictureURL}
                 className="d-block w-100"
                 alt="..."
+                style={{ width: "10rem", height: "10rem" }}
               />
             </div>
             {images
@@ -53,6 +54,7 @@ const CarousalImage = (props) => {
                     src={image.pictureURL}
                     className="d-block w-100"
                     alt="..."
+                    style={{ width: "10rem", height: "10rem" }}
                   />
                 </div>
               ))}

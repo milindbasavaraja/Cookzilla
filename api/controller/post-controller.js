@@ -226,24 +226,24 @@ export const addRecipeIngredients = (req, res) => {
 
 export const addReview = (req, res) => {
   console.log("writing Review for Recipe with id");
-  const postId = req.params.id;
+
   const token = req.cookies.access_token_cookzilla;
 
   if (!token) return res.status(401).json("Not Authenticated!");
   jwt.verify(token, "userLoggedInCookzilla", (error, userInfo) => {
     if (error) res.status(403).json("Token is not valid");
     const insertReviewQuery =
-      "INSERT INTO Review ('userName','recipeID',`revTitle`,`revDesc`,`stars`) VALUES (?)";
+      "INSERT INTO Review (`userName`,`recipeID`,`revTitle`,`revDesc`,`stars`) VALUES (?)";
 
     const values = [
-      userInfo.id,
-      postId,
+      req.body.userName,
+      req.body.postID,
       req.body.revTitle,
       req.body.revDesc,
       req.body.stars,
     ];
 
-    db.query(insertRecipieQuery, [values], (error, data) => {
+    db.query(insertReviewQuery, [values], (error, data) => {
       if (error) return res.status(500).json(error);
       return res.status(200).send("Inserted Recipe");
     });
@@ -251,18 +251,18 @@ export const addReview = (req, res) => {
 };
 
 export const addReviewPhoto = (req, res) => {
-  const token = req.cookies.access_token;
+  const token = req.cookies.access_token_cookzilla;
 
   if (!token) return res.status(401).json("Not Authenticated!");
-  jwt.verify(token, "userLoggedIn", (error, userInfo) => {
+  jwt.verify(token, "userLoggedInCookzilla", (error, userInfo) => {
     if (error) res.status(403).json("Token is not valid");
     const insertRImagesQuery =
-      "INSERT INTO ReviewPicture ('userName',`recipeID`,`pictureURL`) VALUES ?";
+      "INSERT INTO ReviewPicture (`userName`,`recipeID`,`pictureURL`) VALUES ?";
 
     let images = [];
-    console.log("The rew images are", req.body.imgs);
-    req.body.imgs.map((imageURL) => {
-      images.push([userInfo.id, req.body.recipeID, imageURL]);
+
+    req.body.imgURLs.map((imageURL) => {
+      images.push([req.body.userName, req.body.recipeID, imageURL]);
     });
 
     db.query(insertRImagesQuery, [images], (error, data) => {
