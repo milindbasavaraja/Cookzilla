@@ -8,7 +8,7 @@ export const getAllPosts = (req, res) => {
   if ("tags" in queryString) {
     //The query string is: { tags: 'Indian' }
     const getTagsQuery =
-      "SELECT r.recipeID,`title`,`pictureURL` FROM Recipe r,RecipePicture rp, RecipeTag rt WHERE r.recipeID = rp.recipeID AND r.recipeID = rt.recipeID AND tagText=?";
+      "SELECT r.recipeID,`title`,`pictureURL` FROM Recipe r RecipePicture rp, RecipeTag rt WHERE r.recipeID = rp.recipeID AND r.recipeID = rt.recipeID AND tagText=?";
 
     db.query(getTagsQuery, [queryString.tags], (error, data) => {
       if (error) return res.status(500).send(error);
@@ -133,7 +133,7 @@ export const getLatestRecipeID = (req, res) => {
 
   db.query(getLastInsertedRecipieId, [], (error, data) => {
     if (error) return res.status(500).json(error);
-    console.log(data);
+    //console.log(data);
     return res.status(200).json(data[0]);
   });
 };
@@ -149,7 +149,7 @@ export const addRecipePhotos = (req, res) => {
 
   db.query(insertImagesQuery, [images], (error, data) => {
     if (error) return res.status(500).json(error);
-    console.log("Images uploaded");
+    // console.log("Images uploaded");
     return res.status(200).json(data);
   });
 };
@@ -165,7 +165,7 @@ export const addRecipeTags = (req, res) => {
 
   db.query(insertImagesQuery, [tags], (error, data) => {
     if (error) return res.status(500).json(error);
-    console.log("Tags uploaded");
+    //console.log("Tags uploaded");
     return res.status(200).json(data);
   });
 };
@@ -181,13 +181,13 @@ export const addRecipeSteps = (req, res) => {
 
   db.query(insertStepsQuery, [steps], (error, data) => {
     if (error) return res.status(500).json(error);
-    console.log("Steps uploaded");
+    // console.log("Steps uploaded");
     return res.status(200).json(data);
   });
 };
 
 export const getAllStepsById = (req, res) => {
-  console.log("Getting steps by id");
+  //console.log("Getting steps by id");
   const getPostStepsQuery =
     "SELECT `stepNo`,`sDesc` FROM Step s WHERE s.recipeID = ? ORDER BY `stepNo`";
 
@@ -197,7 +197,7 @@ export const getAllStepsById = (req, res) => {
       return res.status(500).send(error);
     }
 
-    console.log(data);
+    // console.log(data);
 
     return res.status(200).json(data);
   });
@@ -221,5 +221,82 @@ export const addRecipeIngredients = (req, res) => {
     if (error) return res.status(500).json(error);
     console.log("Steps uploaded");
     return res.status(200).json(data);
+  });
+};
+
+export const addReview = (req, res) => {
+  console.log("writing Review for Recipe with id");
+  const postId = req.params.id;
+  const token = req.cookies.access_token_cookzilla;
+
+  if (!token) return res.status(401).json("Not Authenticated!");
+  jwt.verify(token, "userLoggedInCookzilla", (error, userInfo) => {
+    if (error) res.status(403).json("Token is not valid");
+    const insertReviewQuery =
+      "INSERT INTO Review ('userName','recipeID',`revTitle`,`revDesc`,`stars`) VALUES (?)";
+
+    const values = [
+      userInfo.id,
+      postId,
+      req.body.revTitle,
+      req.body.revDesc,
+      req.body.stars,
+    ];
+
+    db.query(insertRecipieQuery, [values], (error, data) => {
+      if (error) return res.status(500).json(error);
+      return res.status(200).send("Inserted Recipe");
+    });
+  });
+};
+
+export const addReviewPhoto = (req, res) => {
+  const token = req.cookies.access_token;
+
+  if (!token) return res.status(401).json("Not Authenticated!");
+  jwt.verify(token, "userLoggedIn", (error, userInfo) => {
+    if (error) res.status(403).json("Token is not valid");
+    const insertRImagesQuery =
+      "INSERT INTO ReviewPicture ('userName',`recipeID`,`pictureURL`) VALUES ?";
+
+    let images = [];
+    console.log("The rew images are", req.body.imgs);
+    req.body.imgs.map((imageURL) => {
+      images.push([userInfo.id, req.body.recipeID, imageURL]);
+    });
+
+    db.query(insertRImagesQuery, [images], (error, data) => {
+      if (error) return res.status(500).json(error);
+      console.log("Images uploaded");
+      return res.status(200).json(data);
+    });
+  });
+};
+
+export const getAllReviewsForRecipeID = (req, res) => {
+  const recipeId = req.params.id;
+
+  const getReviewsQueryById =
+    "SELECT `recipeID`,`revTitle`,`revDesc`,`stars`,`userName` FROM Review WHERE recipeID = ?";
+
+  db.query(getReviewsQueryById, [recipeId], (error, data) => {
+    if (error) return res.status(500).send(error);
+
+    return res.status(200).json(data);
+  });
+};
+
+export const getAllReviewsPhotosForRecipeID = (req, res) => {
+  const recipeIdName = req.params.id;
+
+  const recipeID = recipeIdName.split("-")[0];
+  const userName = recipeIdName.split("-")[1];
+
+  const getReviewsPhotoQueryById =
+    "SELECT `recipeID`,`userName`,`pictureURL` FROM ReviewPicture WHERE recipeID = ? AND userName= ?";
+
+  db.query(getReviewsPhotoQueryById, [recipeID, userName], (error, data) => {
+    if (error) return res.status(500).send(error);
+    res.status(200).json(data);
   });
 };

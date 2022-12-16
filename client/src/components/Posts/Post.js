@@ -19,9 +19,9 @@ const Post = () => {
       try {
         const res = await axios.get(`/posts/${postId}`);
         setPost(res.data);
-        console.log("Hitting Steps API");
+
         const resSteps = await axios.get(`/posts/steps/${postId}`);
-        console.log(resSteps);
+
         setSteps(resSteps.data);
       } catch (error) {
         console.log(error);
@@ -117,8 +117,8 @@ const Post = () => {
           ))}
         </div>
       </div>
-      {console.log(post)}
-      <Menu category={post.tagText} id={post.id} />
+
+      <Menu category={post.tagText} postId={postId} />
     </div>
   );
 };
