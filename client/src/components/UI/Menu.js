@@ -114,6 +114,7 @@ const Menu = (props) => {
           revDesc: reviewDescription,
           stars: reviewRating,
         });
+        await onUploadPhotoHandler();
         setReviewTitle("");
         setReviewDescription("");
         window.location.reload(false);
@@ -206,14 +207,6 @@ const Menu = (props) => {
               >
                 Upload Review Photos
               </label>
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={onUploadPhotoHandler}
-                style={{ marginLeft: "1rem", marginBottom: "1rem" }}
-              >
-                Upload
-              </button>
             </div>
           </div>
 

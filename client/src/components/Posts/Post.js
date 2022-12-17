@@ -10,6 +10,7 @@ const Post = () => {
   const [post, setPost] = useState({});
   const [steps, setSteps] = useState([]);
   const [tags, setTags] = useState([]);
+  const [ingredients, setIngredients] = useState([]);
 
   const location = useLocation();
   const navigation = useNavigate();
@@ -27,7 +28,11 @@ const Post = () => {
 
         const resTags = await axios.get(`/posts/tags/${postId}`);
         setTags(resTags.data);
-        console.log(resTags.data);
+        //console.log(resTags.data);
+
+        const resIngrdeients = await axios.get(`/posts/ingredients/${postId}`);
+        setIngredients(resIngrdeients.data);
+        //console.log(resIngrdeients.data);
       } catch (error) {
         console.log(error);
       }
@@ -97,6 +102,28 @@ const Post = () => {
         </div>
         <h1 className="post-content-single-h1">{post.title}</h1>
         <h4>Recipe Ingredients</h4>
+        <table className="table table-dark">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Ingredient Name</th>
+              <th scope="col">Amount</th>
+              <th scope="col">Unit</th>
+            </tr>
+          </thead>
+          {ingredients.length === 0
+            ? ""
+            : ingredients.map((ingredient, index) => (
+                <tbody key={index}>
+                  <tr>
+                    <th scope="row">{index}</th>
+                    <td>{ingredient.iName}</td>
+                    <td>{ingredient.amount}</td>
+                    <td>{ingredient.unitName}</td>
+                  </tr>
+                </tbody>
+              ))}
+        </table>
         <h3 className="post-content-single-h3">Recipe Steps</h3>
         <div className="accordion" id="accordionExample">
           {steps.map((step) => (

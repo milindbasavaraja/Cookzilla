@@ -11,6 +11,7 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log("THe category is:", category);
         const res = await axios.get(`/posts${category}`);
 
         setPosts(res.data);

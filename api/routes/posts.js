@@ -8,6 +8,7 @@ import {
   addReview,
   addReviewPhoto,
   deletePostById,
+  getAllIngredientsById,
   getAllPosts,
   getAllReviewsForRecipeID,
   getAllReviewsPhotosForRecipeID,
@@ -29,6 +30,7 @@ router.get("/steps/:id", getAllStepsById);
 router.get("/reviews/:id", getAllReviewsForRecipeID);
 router.get("/reviews/photos/:id", getAllReviewsPhotosForRecipeID);
 router.get("/tags/:id", getAllTagsById);
+router.get("/ingredients/:id", getAllIngredientsById);
 
 router.post("/", addPost);
 router.post("/images", addRecipePhotos);

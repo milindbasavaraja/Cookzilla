@@ -4,15 +4,35 @@ import { TransformData } from "../utility/TransformData.js";
 
 export const getAllPosts = (req, res) => {
   const queryString = req.query;
-
-  if ("tags" in queryString) {
+  console.log(queryString);
+  if ("ingredients" in queryString) {
     //The query string is: { tags: 'Indian' }
+    const getIngredientsQuery =
+      "SELECT r.recipeID,`title`,`pictureURL` FROM Recipe r,RecipePicture rp,RecipeIngredient i WHERE r.recipeID = i.recipeID AND r.recipeID = rp.recipeID AND iName=?";
+
+    db.query(getIngredientsQuery, [queryString.ingredients], (error, data) => {
+      if (error) return res.status(500).send(error);
+
+      const transformedData = TransformData(data);
+      return res.status(200).json(transformedData);
+    });
+  } else if ("tags" in queryString) {
     const getTagsQuery =
-      "SELECT r.recipeID,`title`,`pictureURL` FROM Recipe r RecipePicture rp, RecipeTag rt WHERE r.recipeID = rp.recipeID AND r.recipeID = rt.recipeID AND tagText=?";
+      "SELECT r.recipeID,`title`,`pictureURL` FROM Recipe r,RecipePicture rp, RecipeTag rt WHERE r.recipeID = rp.recipeID AND r.recipeID = rt.recipeID AND tagText=?";
 
     db.query(getTagsQuery, [queryString.tags], (error, data) => {
       if (error) return res.status(500).send(error);
+      console.log(data);
+      const transformedData = TransformData(data);
+      return res.status(200).json(transformedData);
+    });
+  } else if ("stars" in queryString) {
+    const getTagsQuery =
+      "SELECT r.recipeID,`title`,`pictureURL` FROM Recipe r,RecipePicture rp, Review rt WHERE r.recipeID = rp.recipeID AND r.recipeID = rt.recipeID AND stars=?";
 
+    db.query(getTagsQuery, [queryString.stars], (error, data) => {
+      if (error) return res.status(500).send(error);
+      console.log(data);
       const transformedData = TransformData(data);
       return res.status(200).json(transformedData);
     });
@@ -209,6 +229,23 @@ export const getAllTagsById = (req, res) => {
     "SELECT `recipeID`,`tagText` FROM RecipeTag WHERE recipeID = ?";
 
   db.query(getPostStepsQuery, [req.params.id], (error, data) => {
+    if (error) {
+      console.log("Error happened while querying per ID", error);
+      return res.status(500).send(error);
+    }
+
+    // console.log(data);
+
+    return res.status(200).json(data);
+  });
+};
+
+export const getAllIngredientsById = (req, res) => {
+  //console.log("Getting steps by id");
+  const getPostIngredientsQuery =
+    "SELECT `recipeID`,`iName`,`unitName`,`amount` FROM RecipeIngredient WHERE recipeID = ?";
+
+  db.query(getPostIngredientsQuery, [req.params.id], (error, data) => {
     if (error) {
       console.log("Error happened while querying per ID", error);
       return res.status(500).send(error);
