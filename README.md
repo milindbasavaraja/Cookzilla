@@ -13,7 +13,9 @@ of predefined tags, supplied by the website, to help organize recipes into categ
 4. We will also want to keep track of who posted which recipe. Think a little about how to specify quantities for ingredients, since in recipes, people may use expressions such as ``200 grams of flour”, “one ounce of water”, “one teaspoon of Worcester Sauce”, or
 “a pinch of salt”. Note that these units can be converted, e.g., one teaspoon is about 5ml, and you may need to model such conversions.
 5. Other users can read the posted recipes, can write reviews of the recipes, and can give a rating (one to five stars). A review has a title, a text for the review, and optionally some photos (since people who used the recipes may want to post pictures of the resulting dish) and some suggestions on how to modify the recipe (e.g., “use butter instead of oil” or “bake at slightly lower temperature for a more moist cake”). We will also want to keep track of who gave which ratings and who wrote which review.
-6. Finally, users can create and join informal groups that organize cooking events. Thus, there might be a group called ``Brooklyn Turkish Cooking” whose members occasionally meet to try out recipes for Turkish food. Groups will be identified by the name, along with the username of the person who creates the group. Members can RSVP for such meetings, and may post meeting reports with photos of the event to the site, where they can be read by members of the group but not by other users
+6. Finally, users can create and join informal groups that organize cooking events. Thus, there might be a group called ``Brooklyn Turkish Cooking” whose members occasionally meet to try out recipes for Turkish food. Groups will be identified by the name, along with the username of the person who creates the group. Members can RSVP for such meetings, and may post meeting reports with photos of the event to the site, where they can be read by members of the group but not by other users.
+
+![Cookzilla ER Diagram](CookZillaERDiag.png)
 
 
 ## Available Scripts
