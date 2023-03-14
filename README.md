@@ -1,6 +1,20 @@
-# Getting Started with Create React App
+# Cookzilla
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Cookzilla™**, which focuses on cooking and recipes. The site should allow people to post cooking recipes, to review 
+and rate posted cooking recipes and to organize cooking meetings with other users.
+
+This website can perform following activities: 
+1. Registered users on the site are identified by a unique username, and they can optionally provide a short profile 
+with information about themselves. 
+2. Users can post recipes on the site that are then visible by everybody. A recipe usually has a title (e.g., “Aunt Mary’s Apple Pie”), 
+a number of servings, the ingredients and their quantities, a procedure of how to make the food item, and one or more pictures of the dish. 3. The system will assign a unique recipeID to each recipe. Recipes can also link to other related recipes. The system also has a set
+of predefined tags, supplied by the website, to help organize recipes into categories. Examples of such tags would be “Italian’’,
+“Chinese”, “vegan”, “soup”, “spicy”, etc. When a user posts a recipe, they can attach one or more of these tags to their recipe. 
+4. We will also want to keep track of who posted which recipe. Think a little about how to specify quantities for ingredients, since in recipes, people may use expressions such as ``200 grams of flour”, “one ounce of water”, “one teaspoon of Worcester Sauce”, or
+“a pinch of salt”. Note that these units can be converted, e.g., one teaspoon is about 5ml, and you may need to model such conversions.
+5. Other users can read the posted recipes, can write reviews of the recipes, and can give a rating (one to five stars). A review has a title, a text for the review, and optionally some photos (since people who used the recipes may want to post pictures of the resulting dish) and some suggestions on how to modify the recipe (e.g., “use butter instead of oil” or “bake at slightly lower temperature for a more moist cake”). We will also want to keep track of who gave which ratings and who wrote which review.
+6. Finally, users can create and join informal groups that organize cooking events. Thus, there might be a group called ``Brooklyn Turkish Cooking” whose members occasionally meet to try out recipes for Turkish food. Groups will be identified by the name, along with the username of the person who creates the group. Members can RSVP for such meetings, and may post meeting reports with photos of the event to the site, where they can be read by members of the group but not by other users
+
 
 ## Available Scripts
 
@@ -29,42 +43,4 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
